@@ -93,8 +93,6 @@ module.exports = class Post extends POST_COLL {
                 .sort({ seen: -1})
                 .limit(5)
 
-                console.log(listPostTop5.name)
-                
                 if (!listPostTop5) return resolve({ error: true, message: 'cannot_get_list_data' });
 
                 return resolve({ error: false, data: listPostTop5 });
@@ -201,4 +199,51 @@ module.exports = class Post extends POST_COLL {
             }
         })
     }
+
+    //Thích bài viết
+    static likePost({ postID, userID }) {
+        return new Promise(async resolve => {
+            try {
+
+                if (!ObjectID.isValid(postID, userID))
+                    return resolve({ error: true, message: 'params_invalid' });
+
+                let likeOfPost = await POST_COLL.findByIdAndUpdate(postID, {
+                    $addToSet: { like: userID }
+                }, {new: true})
+
+                if (!likeOfPost) return resolve({ error: true, message: 'cannot_get_list_data' });
+
+                return resolve({ error: false, data: likeOfPost });
+
+            } catch (error) {
+
+                return resolve({ error: true, message: error.message });
+            }
+        })
+    }
+
+    //Bỏ thích bài viết
+    static unLikePost({ postID, userID }) {
+        return new Promise(async resolve => {
+            try {
+
+                if (!ObjectID.isValid(postID, userID))
+                    return resolve({ error: true, message: 'params_invalid' });
+                    
+                let unLikeOfPost = await POST_COLL.findByIdAndUpdate(postID, {
+                    $pull: { like: userID }
+                }, {new: true})
+
+                if (!unLikeOfPost) return resolve({ error: true, message: 'cannot_get_list_data' });
+
+                return resolve({ error: false, data: unLikeOfPost });
+
+            } catch (error) {
+
+                return resolve({ error: true, message: error.message });
+            }
+        })
+    }
+
 }

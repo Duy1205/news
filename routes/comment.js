@@ -16,15 +16,11 @@ let ObjectID = require('mongoose').Types.ObjectId;
 // })
 
 route.post('/add-comment', checkActive, async (req, res) => {
-    //console.log({content, post});
     let infoUser = req.session;
-    let {postID, content, author} = req.body;
-    let infoComment = await COMMENT_MODEL.insert({postID, content, author});
+    let {postID, content} = req.body;
+    let infoComment = await COMMENT_MODEL.insert({postID, content, author: infoUser.user.infoUser._id});
     console.log(infoComment);
-
     res.json({infoComment});
-    
-    
 })
 
 // route.get('/infoComment', async (req, res) => {

@@ -11,13 +11,19 @@
                                 <p><%-infoPost.content%></p>
                                 <div class="meta">
                                     <span class="author">By <a href=""></a></span>
-                                    <span class="time"></span>
+                                </div>
+                                 <div class="helpful">
+                                    <a class="like" id="like-post" _postID ="<%=infoPost._id%>" href="#">Tôi thích bài viết này </a>
+                                    <p>Lượt like: 24 </p>
+                                    <a class="dislike" id="un-like-post" href="#">Tôi không thích bài viết này</a>
+                                    <p>Lượt dislike: 1 </p>
                                 </div>
                             </div><!-- /.head-post -->
                             <div class="body-post">
-                                
+                               
                                 <div class="main-post">
                                     <div class="entry-post">
+                                    
                                         </div><!-- /.entry-post -->
                                     <!-- <div class="help-post">
                                         <div class="helpful">
@@ -40,6 +46,7 @@
                                             <p>John is an American Graphic &amp; Web Designer, Pixel &amp; CSS lover, WordPress &amp; coffee addict. He loves UI and UX design for mobile and web apps.</p>
                                         </div>
                                     </div> -->
+                                    
                                     <div class="comment-post">
                                         <div class="comments-list">
                                             <h4 class="title">Bình Luận</h4>
@@ -143,38 +150,74 @@
 
 <script>
    
-    $(document).on('click', '#btnComment', function(e) {
+    // $(document).on('click', '#btnComment', function(e) {
+	// 	e.preventDefault();
+        
+    //     let examID = $(this).attr('_examID');
+    //     let content = $('#inputComment').val();
+    //     let author = $('#commentname').val();
+        
+    //     $.ajax({
+    //         url: `/comment/add-comment`,
+    //         method: 'POST',
+    //         data: { examID, content },
+    //         success: resp => {  
+    //             let infoComment = resp.data
+    //             //console.log({ infoComment })
+    //             if(!resp.error){
+    //                 $('.panel-body .comment').append(`
+    //                     <div class="comment-panel">
+    //                         <img src="../lttnpy_core/images/logo_new.png" alt="logo">
+    //                         <br>
+    //                         <p>${author}</p>
+    //                         <p style="font-size: 10px; color: gray">${moment(infoComment.createAt).startOf('minutes').fromNow()}</p>
+    //                         <p>${content}</p>
+    //                         <a id="btnDeleteComment" _examID="${examID}" _commentID="${infoComment._id}" href="">Xóa</a>
+    //                         <br>
+    //                     </div>
+    //                 `)
+    //                 $('#inputComment').val('')
+    //             }else{
+    //                 return toastr['error']('FAIL', 'Thông báo');
+    //             }
+    //         },
+    //         error: err => console.log({ err })
+    //     });
+    // })
+
+    $(document).on('click', '#like-post', function(e) {
 		e.preventDefault();
-        
-        let examID = $(this).attr('_examID');
-        let content = $('#inputComment').val();
-        let author = $('#commentname').val();
-        
+        let postID = $(this).attr("_postID");
+        console.log({ postID })
         $.ajax({
-            url: `/comment/add-comment`,
+            url: `/posts/like-post/${postID}`,
             method: 'POST',
-            data: { examID, content },
-            success: resp => {  
-                let infoComment = resp.data
-                //console.log({ infoComment })
+            success: resp => {
                 if(!resp.error){
-                    $('.panel-body .comment').append(`
-                        <div class="comment-panel">
-                            <img src="../lttnpy_core/images/logo_new.png" alt="logo">
-                            <br>
-                            <p>${author}</p>
-                            <p style="font-size: 10px; color: gray">${moment(infoComment.createAt).startOf('minutes').fromNow()}</p>
-                            <p>${content}</p>
-                            <a id="btnDeleteComment" _examID="${examID}" _commentID="${infoComment._id}" href="">Xóa</a>
-                            <br>
-                        </div>
-                    `)
-                    $('#inputComment').val('')
+                    return toastr['success']('Đã thích bài viết', 'Thông báo');
                 }else{
-                    return toastr['error']('FAIL', 'Thông báo');
+                    return toastr['error']('Thất bại', 'Thông báo');
                 }
             },
-            error: err => console.log({ err })
+            error: err => console.log({ err });
+        });
+    })
+
+    $(document).on('click', '#un-like-post', function(e) {
+		e.preventDefault();
+        let postID = $(this).attr("_postID");
+        console.log({ postID })
+        $.ajax({
+            url: `/posts/un-like-post/${postID}`,
+            method: 'POST',
+            success: resp => {
+                if(!resp.error){
+                    return toastr['success']('Đã thích bài viết', 'Thông báo');
+                }else{
+                    return toastr['error']('Thất bại', 'Thông báo');
+                }
+            },
+            error: err => console.log({ err });
         });
     })
  

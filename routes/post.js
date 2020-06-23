@@ -1,10 +1,9 @@
 const route = require('express').Router();
-const  POST_MODEL  = require('../models/post');
+const jwt       = require('../utils/jwt');
+const POST_MODEL  = require('../models/post');
 const TOPIC_MODEL = require('../models/topic');
 const COMMENT_MODEL = require('../models/comment');
 const { renderToView } = require('../utils/childRouting');
-
-let ObjectID = require('mongoose').Types.ObjectId;
 
 route.get('/listPost', async (req, res) => {
     let listPost = await POST_MODEL.getList();
@@ -50,7 +49,7 @@ route.post('/update-post/:postID', async (req, res) => {
     let { topic,name,content} = req.body;
     
     let infoPost = await POST_MODEL.update({postID, topic, name, content});
-    console.log(infoPost);
+    //console.log(infoPost);
     
     res.json({infoPost});
 })
@@ -68,5 +67,22 @@ route.post('/remove-post/:postID', async (req, res) => {
     res.json({infoPost});
 })
 
+//Thích bài viết
+route.post('/like-post/:postID', async (req, res) => {
+    console.log("Da vao thich bai viet")
+    let infoUser = req.session;
+    let { postID } = req.params;
+    let infoPostAfterUpdate = await POST_MODEL.likePost({ postID, userID: infoUser.user.infoUser._id })
+    res.json(infoPostAfterUpdate)
+})
+
+//Bỏ thích bài viết
+route.post('/un-like-post/:postID', async (req, res) => {
+    console.log("Da vao thich bai viet")
+    let infoUser = req.session;
+    let { postID } = req.params;
+    let infoPostAfterUpdate = await POST_MODEL.unLikePost({ postID, userID: infoUser.user.infoUser._id })
+    res.json(infoPostAfterUpdate)
+})
 
 module.exports = route;
