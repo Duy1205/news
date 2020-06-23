@@ -1,3 +1,4 @@
+<% moment.locale('vi')%>
 <%- include('../partials/header.ejs') %>
 	<!-- Main -->
 	<section id="main">
@@ -7,20 +8,20 @@
 					<div class="featured-posts gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
 						<div class="content-left">
 							<article class="post">
-								<div class="thumb">
-									<a href="#"><img src="../images/thumbs/9.jpg" alt="img"></a>
-								</div>
-								<div class="cat">
-									<a href>Mustreads</a>
-								</div>
 								<% if(listPost && listPost.length){ %>
 									<% for( let index = 0; index < 1; index++ ) { %>
+										<div class="thumb">
+											<a href="/posts/info-post?postID=<%=listPost[index]._id%>"><img src="../images/thumbs/fa2.jpg" alt="img"></a>
+										</div>
+										<div class="cat">
+											<a href="/topics/info-topic?topicID=<%=listPost[index].topic._id%>"><%=listPost[index].topic.name%></a>
+										</div>
 										<h3><a href="/posts/info-post?postID=<%=listPost[index]._id%>"><%=listPost[index].name%></a></h3>
-										<p class="excerpt-entry"><a href="/posts/info-post?postID=<%=listPost[index]._id%>"><%=listPost[index].content%></a></p>
 										<div class="post-meta">
-											<span class="author">By <a href="#">Paul Graham</a></span>
 											<div class="activity">
-												<span class="views">345</span><span class="comment"><a href="#">15</a></span>
+												<!--<span class="views">345</span>-->
+												<span class="views"><%= listPost[index].seen.length %></span>
+												<span class="comment"><a href="#"><%= listPost[index].comments.length %></a></span>
 											</div>
 										</div>
 									<% } %>
@@ -29,33 +30,40 @@
 						</div><!-- /.content-left -->
 						<div class="content-right">
 							<article class="post">
-								<div class="thumb">
-									<a href="#"><img src="../images/thumbs/4.jpg" alt="img"></a>
-								</div>
-								<div class="cat">
-									<a href>Tech</a>
-								</div>
 								<% if(listPost && listPost.length){ %>
 									<% for( let index = 1; index < 2; index++ ) { %>
+										<div class="thumb">
+											<a href="/posts/info-post?postID=<%= listPost[index]._id%>"><img src="../images/thumbs/fa3.jpg" alt="img"></a>
+										</div>
+										<div class="cat">
+											<a href="/topics/info-topic?topicID=<%=listPost[index].topic._id%>"><%=listPost[index].topic.name%></a>
+											
+										</div>
 										<h3><a href="/posts/info-post?postID=<%=listPost[index]._id%>"><%=listPost[index].name%></a></h3>
 										<div class="activity">
-											<span class="views">12</span><span class="comment"><a href="#">15</a></span>
+											<!-- <span class="views">12</span> -->
+											<span class="views"><%= listPost[index].seen.length %></span>
+											<span class="comment"><a href="#"><%= listPost[index].comments.length %></a></span>
 										</div>
 									<% } %>
                             	<% }%>
 							</article><!--  /.post -->
 							<article class="post">
-								<div class="thumb">
-									<a href="#"><img src="../images/thumbs/4-2.jpg" alt="img"></a>
-								</div>
-								<div class="cat">
-									<a href>Social media</a>
-								</div>
+								
 								<% if(listPost && listPost.length){ %>
 									<% for( let index = 2; index < 3; index++ ) { %>
+										<div class="thumb">
+											<a href="/posts/info-post?postID=<%= listPost[index]._id%>"><img src="../images/thumbs/fa1.jpg" alt="img"></a>
+										</div>
+										<div class="cat">
+											<a href="/topics/info-topic?topicID=<%=listPost[index].topic._id%>"><%=listPost[index].topic.name%></a>
+											
+										</div>
 										<h3><a href="/posts/info-post?postID=<%=listPost[index]._id%>"><%=listPost[index].name%></a></h3>
 										<div class="activity">
-											<span class="views">12</span><span class="comment"><a href="#">15</a></span>
+											<!-- <span class="views">12</span> -->
+											<span class="views"><%= listPost[index].seen.length %></span>
+											<span class="comment"><a href="#"><%= listPost[index].comments.length %></a></span>
 										</div>
 									<% } %>
                             	<% }%>
@@ -203,20 +211,18 @@
 							<h5 class="widget-title">Những Bài Viết Gần Đây</h5>
 							<ul>
                             <% if(listPost && listPost.length){ %>
-                            <%listPost.forEach(item => { %>
+                            <%for (let index = 0; index < 6; index++) {%>
                                 <li>
 									<div class="thumb">
-										<a href="/posts/info-post?postID=<%=item._id%>"><img src="../images/thumbs/2.jpg" alt="img"></a>
+										<a href="/posts/info-post?postID=<%=listPost[index]._id%>"><img src="../images/thumbs/sad.jpg" alt="img"></a>
 									</div>
 									<div class="content">
-										<h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
-										<div class="date"><%=moment(item.createAt).format('L')%></div>
+										<h3><a href="/posts/info-post?postID=<%=listPost[index]._id%>"><%=listPost[index].name%></a></h3>
+										<div class="date"><%=moment(listPost[index].createAt).startOf('hour').fromNow();%></div>
 									</div>
 								</li>
-                            <% })%>
-                                
                             <% }%>
-								
+                            <% }%>
 							</ul>
 						</div><!-- /.widget-recent -->
 						<div class="widget widget-ads gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
@@ -226,26 +232,16 @@
 						<div class="widget widget-most-popular gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
 							<h5 class="widget-title">5 Bài Viết Phổ Biến Nhất</h5>
 							<ul>
-								<li>
-									<div class="order">1</div>
-									<p><a href>The World’s Youngest Billionaire is Just 24 and She’s From Hong Kong</a></p>
-								</li>
-								<li>
-									<div class="order">2</div>
-									<p><a href>The World’s Youngest Billionaire is Just 24 and She’s From Hong Kong</a></p>
-								</li>
-								<li>
-									<div class="order">3</div>
-									<p><a href>The World’s Youngest Billionaire is Just 24 and She’s From Hong Kong</a></p>
-								</li>
-								<li>
-									<div class="order">4</div>
-									<p><a href>The World’s Youngest Billionaire is Just 24 and She’s From Hong Kong</a></p>
-								</li>
-								<li>
-									<div class="order">5</div>
-									<p><a href>The World’s Youngest Billionaire is Just 24 and She’s From Hong Kong</a></p>
-								</li>
+								<%if (listPostTop5 || listPostTop5.length) {%>
+									<% listPostTop5.forEach((post, index) => { %>
+										<li>
+											<div class="order"><%= index +1%></div>
+										
+											<p><a href="/posts/info-post?postID=<%= listPostTop5._id %>"><%= listPostTop5.name %></a></p>
+										</li>
+									<% }) %>
+								<%} %>
+								
 							</ul>
 						</div><!-- /.widget-popular -->
 						<div class="widget widget-tabs gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
@@ -341,20 +337,18 @@
 								   	</div><!-- /.comments -->
 								   	<div class="content">
 										<div class="tags">
-											<a href="#">Music</a>
-											<a href="#">Làm đẹp</a>
+											<a href="#">Doanh Nhân</a>
+											<a href="#">Đời Sống</a>
 											<a href="#">Tin Tức Mới</a>
-											<a href="#">Fifa Online 4</a>
-											<a href="#">Đột Kích</a>
-											<a href="#">Sách</a>
-											<a href="#">Việt Nam</a>
-											<a href="#">Bóng Đá</a>
+											<a href="#">Giải Trí</a>
+											<a href="#">Thể Thao</a>
+											<a href="#">Game</a>
 										</div>
 								   	</div><!-- /.comments -->
 								</div><!-- /.content-tab -->
 							</div><!-- /.tabs -->
 						</div><!-- /.widget-tabs -->
-						<div class="widget widget-follow-us gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
+						<!-- <div class="widget widget-follow-us gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
 							<h5 class="widget-title text-dark">Follow Us</h5>
 							<div class="socials">
 								<a class="facebook" href="fb.com/tothanhdat.ttd"><i class="fa fa-facebook"></i></a>
@@ -364,7 +358,7 @@
 								<a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a>
 								<a class="tumblr" href="#"><i class="fa fa-tumblr"></i></a>
 							</div>
-						</div><!-- /.widget-follow-us -->
+						</div> -->
 						<div class="widget widget-categories gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
 							<h5 class="widget-title">Lưu Trữ</h5>
 							<ul class="cat-list">
@@ -510,6 +504,6 @@
 			</div><!-- /.row -->
 		</div><!-- /.container -->
 	</section>
-    <%- include('../partials/footer.ejs') %>
+<%- include('../partials/footer.ejs') %>
 
 	

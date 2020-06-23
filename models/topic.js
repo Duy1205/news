@@ -54,7 +54,7 @@ module.exports = class Topic extends TOPIC_COLL {
                     return resolve({ error: true, message: 'params_invalid' });
 
                 let infoTopic = await TOPIC_COLL.findById(topicID)
-
+                .populate('posts').sort({ createAt: -1 })
                 if (!infoTopic) return resolve({ error: true, message: 'cannot_get_info_data' });
 
                 return resolve({ error: false, data: infoTopic });
@@ -84,18 +84,17 @@ module.exports = class Topic extends TOPIC_COLL {
         })
     }
 
-    static update({ topicID, name, userUpdate }) {
+    static update({ topicID, name }) {
         return new Promise(async resolve => {
             try {
 
-                console.log({ topicID, name, userUpdate });
+                //console.log({ topicID, name, userUpdate });
                 
                 if (!ObjectID.isValid(topicID) ) //|| !ObjectID.isValid(userUpdate)
                     return resolve({ error: true, message: 'params_invalid' });
 
                 let dataUpdate = {
-                    name,
-                    userUpdate, 
+                    name
                     
                 }
                 

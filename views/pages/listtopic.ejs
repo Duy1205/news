@@ -1,0 +1,100 @@
+<%- include ('../partials2/sidebar') %>
+<%- include ('../partials2/header') %>
+<style>
+    .inputfile {
+       width: 0.1px;
+       height: 0.1px;
+       opacity: 0;
+       overflow: hidden;
+       position: absolute;
+       z-index: -1;
+    }
+    </style>
+
+    <div id="content-page" class="content-page">
+        <div class="container">
+        <div class="row">
+            <div class="col-lg-1">
+            </div>
+            <div class="col-lg-9">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                    <h4 style="font-family: utm-avo">DANH SÁCH BÀI VIẾT</h4>
+                    </div>
+                    <form class="search-bar">
+                        <input type="text" class="form-control col-sm-4" id="search" placeholder="Tìm Kiếm">
+                        <a href="/posts/listPost"></a>
+                    </form>
+                    <br>
+                    <table class="table table-hover" id="table_container">
+                    <thead class ="thead-dark">
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên Chủ Đề</th>
+                            <th>Tác Vụ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (listTopic && listTopic.length) { %>
+                            <% listTopic.forEach((item, index ) => { %>
+                            <tr>
+                            <td scope="row"> <%= index + 1%> </td>
+                            <td><%= item.name %> </td>
+                            <td>
+                                <button class="btn btn-danger" _topicID="<%= item._id%>" id="btnRemove" type='submit'>
+                                <i class="fa fa-times"></i> 
+                                    Xóa
+                                </button>
+                                <a href="/topics/edit-topic/<%= item._id %> ">
+                                    <button class="btn btn-success" id="btnUpdate" type='submit'>
+                                    <i class="fa fa-check-square-o"></i>
+                                    Sửa
+                                    </button>
+                                </a>
+                            </td>
+                            </tr>
+                            <% }) %>
+                        <% } %>
+                    <div id="cannot_found" style="text-align: center; display: none">
+                            <strong>KHÔNG TÌM THẤY</strong>
+                    </div>
+                    <!-- <tbody id="list_data">
+                        
+                        <div id="can_found" style="text-align: center; display: none">
+                        </div>
+                    
+                    </tbody> -->
+                    </table>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    
+<%- include ('../partials2/footer') %>
+
+<script>
+
+    $(document).on('click', '#btnRemove',function(e){
+        e.preventDefault();
+
+        let topicID = $(this).attr('_topicID');
+        console.log({topicID})
+        if (window.confirm('Bạn có chắc chắn xóa không?')) {
+            $.ajax({
+                url: `/topics/remove-topic/${topicID}`,
+                method: 'POST',
+                success: resp=>{
+                    if(! resp.error){
+                        window.location.href = "/listtopic"
+                    }else{
+                        toastr.warning("Ban kh xoa dc", "Canh Bao")
+                    }
+                }
+            })
+        }
+    })
+
+</script>

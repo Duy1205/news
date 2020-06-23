@@ -22,14 +22,41 @@ route.get('/dang-nhap', async (req, res) => {
     res.render('pages/login');
 })
 
+route.get('/edit-user/:userID', async (req, res) => {
+
+    let {userID} = req.params;
+    
+    let infoUser = await USER_MODEL.getInfo({ userID });
+    // console.log({infoTopic});
+    
+    renderToView(req, res, 'pages/edit-user', {infoUser : infoUser.data});
+});
+
+route.get('/edit-password/:userID', async (req, res) => {
+
+    let { userID } = req.params;
+
+    let infoUser = await USER_MODEL.getInfo({userID});
+
+    renderToView(req, res, 'pages/edit-password', {infoUser : infoUser.data})
+
+})
+
 route.post('/login', async (req, res) => {
     let { email, password } = req.body;
+
     let infoUser = await USER_MODEL.signIn(email, password);
-    if (infoUser.error && infoUser.message == 'email_not_exist')
-        return res.render('pages/login', { alertErrorLogin: true });
+    console.log({infoUser});
+    
+    if(infoUser.error){
+        return res.json(infoUser);
+    }
+    // if (infoUser.error && infoUser.message == 'email_not_exist')
     // res.cookie('token', infoUser.data.token, { maxAge: 900000 });
+    // req.session.token = infoUser.data.token; //gán token đã tạo cho session
+    // res.json({infoUser})
     req.session.token = infoUser.data.token; //gán token đã tạo cho session
-    return res.json(infoUser)
+    res.json({infoUser})
 })
 
 route.get('/dang-xuat', async (req, res) => {
@@ -43,6 +70,7 @@ route.get('/listUser', async (req, res) => {
     console.log(listUser);
     
     res.json({listUser});
+    
     
 })
 
@@ -68,10 +96,18 @@ route.get('/infoUser', async (req, res) => {
 route.post('/register', async (req, res) => {
     let { email, password, fullname } = req.body;
     let infoUser = await USER_MODEL.register(email, password, fullname);
-    if (infoUser.error && infoUser.message == 'email_existed')
-        return res.render('pages/register', { alertErrorRegister: true });
-    //return res.redirect('/user/dang-nhap');
-    return res.json(infoUser)
+    console.log({infoUser});
+    if(infoUser.error){
+        return res.json(infoUser);
+    }
+   
+    // if (infoUser.error && infoUser.message == 'email_existed')
+        // return res.json({infoUser});
+   
+        //return res.redirect('/user/dang-nhap');
+   
+    return res.json({infoUser})
+   
     // let {fullname, email, password} = req.body;
     // console.log({fullname, email, password});
     

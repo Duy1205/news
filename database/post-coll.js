@@ -9,7 +9,11 @@ var postSchema = new Schema({
     name: String,
     content: String,
     file: String,
-    seen: Number,
+    seen: [{
+        type: Schema.Types.ObjectId,
+        ref: "user",
+        default: []
+    }],
     like : Number,
     comments: [{
         type: Schema.Types.ObjectId,

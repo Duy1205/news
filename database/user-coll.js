@@ -11,6 +11,10 @@ var userSchema = new Schema({
     fullname: String,
     password: String,
     avatar: String,
+    role: {
+        type: Number,
+        default: 0
+    },
     createAt: Date
 });
 

@@ -32,7 +32,7 @@ a:active,
 .navigation-panel .close-nav:hover,
 .contact-page .contact-social li:hover i,
 .about-page .about-links li a:hover {
-	color: #e8280b;
+	color: black;
 }
 
 button,
@@ -51,15 +51,15 @@ input[type="submit"],
 .tabs.style2 .content-tab.scroll li:hover:before,
 .about-page .about-twitter .follow-us,
 .flex-control-nav li a.flex-active {
-    background-color: #e8280b;
+    background-color: black;
 }
 
 .floatPanel #sidebar2 {
-	border-right: 14px solid #e8280b;
+	border-right: 14px solid black;
 }
 
 .gn-gallery #gn-carousel ul.slides li.flex-active-slide img {
-	border: 2px solid #e8280b;
+	border: 2px solid black;
 }
 
 /* Darker Color */

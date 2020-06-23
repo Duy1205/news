@@ -1,11 +1,12 @@
 const ObjectID = require('mongoose').Types.ObjectId;
 const POST_COLL = require('../database/post-coll');
 const COMMENT_COLL = require('../database/comment-coll');
+const USER_COLL = require('../database/user-coll');
 // const TOPIC_COLL = require('../database/topic-coll');
 
 module.exports = class Comment extends COMMENT_COLL {
 
-    static insert({ content, post}) {
+    static insert({author, content, postID}) {
         return new Promise(async resolve => {
             try {
 
@@ -14,21 +15,21 @@ module.exports = class Comment extends COMMENT_COLL {
 
                 let dataInsert = { 
                     content,
-                    post
+                    author
                 };
                 
 
-                let infoAfterInsert = new COMMENT_COLL(dataInsert);
+                let infoAfterInsert = new COMMENT_COLL({dataInsert, post : postID});
                 let saveDataInsert = await infoAfterInsert.save();
 
                 if (!saveDataInsert) return resolve({ error: true, message: 'cannot_insert_comment' });
 
                 let {_id: commentID} =  saveDataInsert;
-                console.log(commentID);
-                console.log(post);
+                // console.log(commentID);
+                // console.log(post);
                 
 
-                let PostAfterUpdate = await POST_COLL.findByIdAndUpdate(post, {
+                let PostAfterUpdate = await POST_COLL.findByIdAndUpdate(postID, {
                     $addToSet:{
                         comments: commentID
                     }
@@ -50,7 +51,7 @@ module.exports = class Comment extends COMMENT_COLL {
         return new Promise(async resolve => {
             try {
                 let listComment = await COMMENT_COLL.find().sort({ createAt: -1 });
-                console.log({listComment});
+                // console.log({listComment});
                 
                 if (!listComment) return resolve({ error: true, message: 'cannot_get_list_data' });
 
@@ -82,17 +83,21 @@ module.exports = class Comment extends COMMENT_COLL {
         })
     }
 
-    static remove({ commentID }) {
+    static remove({ commentID, postID }) {
         return new Promise(async resolve => {
             try {
 
                 if (!ObjectID.isValid(commentID))
                     return resolve({ error: true, message: 'params_invalid' });
 
-                let infoAfterRemove = await COMMENT_COLL.findByIdAndDelete(commentID);
+                let infoAfterRemove = await COMMENT_COLL.findByIdAndDelete({ commentID, postID });
 
                 if (!infoAfterRemove)
                     return resolve({ error: true, message: 'cannot_remove_data' });
+
+                let removeCommentToPost = await COMMENT_COLL.findByIdAndUpdate(postID, {
+                    $pull: { comments: commentID }
+                }, {new: true})
 
                 return resolve({ error: false, data: infoAfterRemove, message: "remove_data_success" });
             } catch (error) {

@@ -1,3 +1,4 @@
+<% moment.locale('vi')%>
 <!DOCTYPE html>
 <!--[if IE 8 ]><html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"><!--<![endif]-->
@@ -5,7 +6,7 @@
 	<!-- Basic Page Needs -->
 	<meta charset="utf-8">
 	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
-	<title>KGExpress - Báo Mới &amp; Tin Tức Bóng Đá</title>
+	<title>DExpress - Báo Mới &amp; Báo Doanh Nhân</title>
 	<meta name="description" content>
 	<meta name="keywords" content>
 	<meta name="author" content>
@@ -34,9 +35,9 @@
 	<link href="../icon/apple-touch-icon-114-precomposed.png" rel="apple-touch-icon-precomposed" sizes="114x114">
 	<link href="../icon/apple-touch-icon-72-precomposed.png" rel="apple-touch-icon-precomposed" sizes="72x72">
 	<link href="../icon/apple-touch-icon-57-precomposed.png" rel="apple-touch-icon-precomposed">
-	<link href="../icon/favicon.png" rel="shortcut icon">
-
-	<!--[if lt IE 9]>
+	<link href="../icon/logoKG.jpg" rel="shortcut icon">
+	<link href="../font/fontawesome.min.css">
+	<!--[if lt IE 9]><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/fontawesome.min.css" />
 		<script src="../javascript/html5shiv.js"></script>
 		<script src="../javascript/respond.min.js"></script>
 	<![endif]-->
@@ -48,31 +49,49 @@
 	   	<div class="top-wrap">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-7">
 		              	<div id="logo" class="logo">
 							<a href rel="home" title="home">
 								<img src="../images/logo.svg" alt="">
 							</a>
-		            	</div>
+						</div>
+						
 		            	<div class="follow-us">
 			            	<div class="follow-title">
 			            		Theo dõi chúng tôi
 			            	</div>
 			            	<ul class="social-links">
-			            		<li class="facebook"><a href="https://www.facebook.com/TOTHANHDAT.TTD">Facebook</a></li>
-			            		<li class="twitter"><a href="#">Twitter</a></li>
-								<li class="twitter"><a href="#">Instagram</a></li>
-			            		<li class="google"><a href="#">Google</a></li>
+			            		<li class="facebook"><a href="https://www.facebook.com/duydeptrai120599/">Facebook</a></li>
 			            	</ul>
-		            	</div>
-		            </div><!-- /.col-md-6 -->
-		            <div class="col-md-6">
-		            	<div class="btn-menu"></div><!-- //mobile menu button -->
-		            	<div class="member-area">
-		            		<span class="login-popup"><a href="/users/dang-nhap">Đăng Nhập</a></span>
-		            		<span class="signup-popup"><a href="/users/dang-ky">Đăng Ký</a></span>
-		            	</div>
-		            </div><!-- /.col-md-6 -->
+						</div>
+						
+					</div>
+
+		            <div class="col-md-5">
+						<div class="btn-menu">
+						</div><!-- //mobile menu button -->
+			            	<div class="member-area">
+								<div class="follow-us">
+										<% if(infoUser){%>
+											<div><span class="has-children" style="color: aliceblue;">Hello <%= infoUser.fullname %></span></div>
+											<ul class="social-links">
+												<nav id="mainnav" class="mainnav">
+															<li class="content">
+																<span class="login-popup"><a href="/users/edit-user/<%= infoUser._id %> ">Tài Khoản Của Tôi</a></span>
+															</li>
+															<li class="content">
+																<span class="login-popup"><a href="/users/dang-xuat">Đăng Xuất</a></span>
+															</li>
+												</nav>
+											</ul>
+											<%}else{%>
+												<span class="login-popup"><a href="/users/dang-nhap">Đăng Nhập</a></span>
+												<span class="signup-popup"><a href="/users/dang-ky">Đăng Ký</a></span>
+											<%} %>
+											
+										</div>
+								</div>
+					</div>
 	            </div><!-- /.row -->
 	         </div><!-- /.container -->
 	   	</div><!-- /.top-wrap -->
@@ -82,16 +101,17 @@
 				<div class="col-md-9">
 					<nav id="mainnav" class="mainnav">
 						<ul class="menu">
-							<li><a>Trang Chủ</a></li>	
+							<li><a href="/">Trang Chủ</a></li>	
 							</li>
 							<li class="has-children"><a href="#">Tất Cả</a>
-								<% if(listPost && listPost.length){ %>
-									<%listPost.forEach(item => { %>
+								<% if(listTopic && listTopic.length){ %>
 									<ul class="sub-menu">
-										<li class="has-children"><a href="#"><%=item.name%></a>
+									<%listTopic.forEach(item => { %>
+
+										<li><a href="/topics/info-topic?topicID=<%=item._id%>"><%=item.name%></a>
 										</li>
-									</ul><!-- /.submenu -->
 									<% })%>
+									</ul><!-- /.submenu -->
                             	<% }%>
 							</li>
 							<li class="gn-mega-menu"><a href="category.html">Mới Nhất</a>
@@ -101,30 +121,28 @@
 									<div class="col-md-12">
 										<div class="mega-item-wrap">
 											<% if(listPost && listPost.length){ %>
-												<%listPost.forEach(item => { %>
-											<div class="mega-item">
-												
-														<img src="../images/thumbs/11.jpg" alt="image">	
-														<h5><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h5>
-											</div>
-											<% })%>
+												<% for( let index = 0; index < 6; index++ ) { %>
+												<div class="mega-item">
+													<img src="../images/thumbs/11.jpg" alt="image">	
+													<div class="content">
+														<div class="date"><%=moment(listPost[index].createAt).startOf('hour').fromNow();%></div>
+													</div>
+													<h5><a href="/posts/info-post?postID=<%=listPost[index]._id%>"><%=listPost[index].name%></a></h5>
+												</div>
+											<% }%>
                             			<% }%>
-										</div>
-										<div class="nav-mega-item">
-											In this category:
-											<a href="#">All</a>
-											<a href="#">Tech</a>
-											<a href="#">Apps</a>
-											<a href="#">Dev&amp;Design</a>
-											<a href="#">Dev&amp;Design</a>
-											<a href="#">Gadget</a>
-											<a href="#">Mobile</a>
 										</div>
 									</div>
 									</div>
 									</div>
 								</div><!-- /.submenu -->
 							</li>
+							<% if(infoUser && infoUser.role == 1){ %>
+
+								<li><a href="/dashboard">Dashboard</a></li>	
+							</li>
+							<% }%>
+
 						</ul><!-- /.menu -->
 					</nav><!-- /nav -->
 				</div><!-- /.col-md-9 -->

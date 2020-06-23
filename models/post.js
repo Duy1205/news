@@ -2,40 +2,45 @@ const ObjectID = require('mongoose').Types.ObjectId;
 const POST_COLL = require('../database/post-coll');
 const TOPIC_COLL = require('../database/topic-coll');
 const COMMENT_COLL =  require('../database/comment-coll');
+const USER_COLL = require('../database/user-coll');
 
 module.exports = class Post extends POST_COLL {
 
-    static insert({ name, content, topic, comment}) {
+    static insert({ name, content, topic, author}) {
         return new Promise(async resolve => {
             try {
 
-                if (!name) // !ObjectID.isValid(authorID)
+                if (!name)
                 return resolve({ error: true, message: 'params_invalid' });
 
                 let dataInsert = { 
                     name,
                     content,
-                   //file,
-                    //author: authorID,
                     topic,
-                    comment
+                    author
                 };
                 
 
                 let infoAfterInsert = new POST_COLL(dataInsert);
+                console.log({ infoAfterInsert })
                 let saveDataInsert = await infoAfterInsert.save();
 
                 if (!saveDataInsert) return resolve({ error: true, message: 'cannot_insert_post' });
 
-                let {_id: postID} =  saveDataInsert;
 
                 let topicAfterUpdate = await TOPIC_COLL.findByIdAndUpdate(topic, {
                     $addToSet:{
-                        posts: postID
+                        posts: infoAfterInsert._id
                     } 
                 })
 
-                if( !topicAfterUpdate ){
+                let authorAfterUpdate = await USER_COLL.findByIdAndUpdate(author, {
+                    $addToSet:{
+                        posts: infoAfterInsert._id
+                    } 
+                })
+
+                if( !topicAfterUpdate || !authorAfterUpdate ){
                     return resolve({error: true, message:'cannot_update_topic'})
                 }
 
@@ -50,7 +55,10 @@ module.exports = class Post extends POST_COLL {
     static getList() {
         return new Promise(async resolve => {
             try {
-                let listPost = await POST_COLL.find({}).sort({ createAt: -1 });
+                let listPost = await POST_COLL.find({})
+                .populate('topic')
+                .populate('user')
+                .sort({ createAt: -1 })
                 
                 if (!listPost) return resolve({ error: true, message: 'cannot_get_list_data' });
 
@@ -75,6 +83,29 @@ module.exports = class Post extends POST_COLL {
         })
     }
 
+    //getListPost TOP 5
+    static getListPostTop5() {
+        return new Promise(async resolve => {
+            try {
+                let listPostTop5 = await POST_COLL.find()
+                .populate('topic')
+                .populate('user')
+                .sort({ seen: -1})
+                .limit(5)
+
+                console.log(listPostTop5.name)
+                
+                if (!listPostTop5) return resolve({ error: true, message: 'cannot_get_list_data' });
+
+                return resolve({ error: false, data: listPostTop5 });
+
+            } catch (error) {
+
+                return resolve({ error: true, message: error.message });
+            }
+        })
+    }
+
     static getInfo({ postID }) {
         return new Promise(async resolve => {
             try {
@@ -83,11 +114,35 @@ module.exports = class Post extends POST_COLL {
                     return resolve({ error: true, message: 'params_invalid' });
 
                 let infoPost = await  POST_COLL.findById(postID)
-                .populate('comments');
+                .populate('comments')
+                .populate('topic')
+                .populate('author')
 
-                console.log({infoPost});
-                
                 if (!infoPost) return resolve({ error: true, message: 'cannot_get_info_data' });
+
+                return resolve({ error: false, data: infoPost });
+
+            } catch (error) {
+                return resolve({ error: true, message: error.message });
+            }
+        })
+    }
+
+    static getInfo({ postID, userID }) {
+        return new Promise(async resolve => {
+            try {
+                
+                if (!ObjectID.isValid(postID, userID))
+                    return resolve({ error: true, message: 'params_invalid' });
+
+                let infoPost = await POST_COLL.findById(postID)
+                .populate('subject post user')
+
+                if (!infoPost) return resolve({ error: true, message: 'cannot_get_info_data' });
+
+                let seenOfPost = await POST_COLL.findByIdAndUpdate(postID, {
+                    $push: { seen: userID }
+                }, {new: true})
 
                 return resolve({ error: false, data: infoPost });
 
@@ -116,7 +171,7 @@ module.exports = class Post extends POST_COLL {
         })
     }
 
-    static update({ postID, name, conten, comment }) {
+    static update({ postID,topic, name, content }) {
         return new Promise(async resolve => {
             try {
 
@@ -125,9 +180,9 @@ module.exports = class Post extends POST_COLL {
                     return resolve({ error: true, message: 'params_invalid' });
 
                 let dataUpdate = {
+                    topic,
                     name,
-                    content,
-                    comment
+                    content
                     // file,
                     // userUpdate, 
                     // modifyAt: Date.now()

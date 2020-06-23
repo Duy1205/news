@@ -128,8 +128,6 @@ module.exports = class User extends USER_COLL {
         return new Promise(async resolve => {
             try {
 
-                console.log({ userID, fullname, password });
-
                 if (!ObjectID.isValid(userID)) //|| !ObjectID.isValid(userUpdate)
                     return resolve({ error: true, message: 'params_invalid' });
 

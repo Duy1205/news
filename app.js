@@ -41,6 +41,25 @@ app.get('/', async (req, res) => {
     renderToView(req, res, 'pages/home', {});
 })
 
+app.get('/dashboard', (req, res) => {
+    renderToView(req, res, 'pages/dashboard', {});
+});
+app.get('/add-post', (req, res) => {
+    renderToView(req, res, 'pages/add-post', {});
+});
+app.get('/add-topic', (req, res) => {
+    renderToView(req, res, 'pages/add-topic', {});
+});
+app.get('/add-user', (req, res) => {
+    renderToView(req, res, 'pages/add-user', {});
+});
+app.get('/listpost', (req, res) => {
+    renderToView(req, res, 'pages/listpost', {});
+});
+app.get('/listtopic', (req, res) => {
+    renderToView(req, res, 'pages/listtopic', {});
+});
+
 let uri     = 'mongodb://localhost:27017/webtintuc';
 const PORT  = process.env.PORT || 3000;
 
