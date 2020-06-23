@@ -59,6 +59,9 @@ module.exports = class Post extends POST_COLL {
                 .populate('topic')
                 .populate('user')
                 .sort({ createAt: -1 })
+
+                // console.log(listPost);
+                
                 
                 if (!listPost) return resolve({ error: true, message: 'cannot_get_list_data' });
 
@@ -87,13 +90,12 @@ module.exports = class Post extends POST_COLL {
     static getListPostTop5() {
         return new Promise(async resolve => {
             try {
-                let listPostTop5 = await POST_COLL.find()
+                let listPostTop5 = await POST_COLL.find({})
                 .populate('topic')
                 .populate('user')
-                .sort({ seen: -1})
                 .limit(5)
-
-                console.log(listPostTop5.name)
+                // .sort({seen: 1})
+                // console.log({listPostTop5})
                 
                 if (!listPostTop5) return resolve({ error: true, message: 'cannot_get_list_data' });
 

@@ -233,11 +233,11 @@
 							<h5 class="widget-title">5 Bài Viết Phổ Biến Nhất</h5>
 							<ul>
 								<%if (listPostTop5 || listPostTop5.length) {%>
-									<% listPostTop5.forEach((post, index) => { %>
+									<% listPostTop5.forEach((item, index) => { %>
 										<li>
 											<div class="order"><%= index +1%></div>
 										
-											<p><a href="/posts/info-post?postID=<%= listPostTop5._id %>"><%= listPostTop5.name %></a></p>
+											<p><a href="/posts/info-post?postID=<%= item._id %>"><%= item.name %></a></p>
 										</li>
 									<% }) %>
 								<%} %>
