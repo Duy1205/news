@@ -10,16 +10,19 @@ module.exports = class Comment extends COMMENT_COLL {
         return new Promise(async resolve => {
             try {
 
-                // if (!name) // !ObjectID.isValid(authorID)
-                // return resolve({ error: true, message: 'params_invalid' });
+                if (!content || !ObjectID.isValid(postID, author))
+                return resolve({ error: true, message: 'params_invalid' });
 
                 let dataInsert = { 
                     content,
-                    author
+                    author,
+                    post: postID
                 };
+
+                console.log({ dataInsert })
                 
 
-                let infoAfterInsert = new COMMENT_COLL({dataInsert, post : postID});
+                let infoAfterInsert = new COMMENT_COLL(dataInsert);
                 let saveDataInsert = await infoAfterInsert.save();
 
                 if (!saveDataInsert) return resolve({ error: true, message: 'cannot_insert_comment' });
@@ -31,9 +34,9 @@ module.exports = class Comment extends COMMENT_COLL {
 
                 let PostAfterUpdate = await POST_COLL.findByIdAndUpdate(postID, {
                     $addToSet:{
-                        comments: commentID
+                        comments: infoAfterInsert._id
                     }
-                })
+                }, {new: true})
 
                 if( !PostAfterUpdate ){
                     return resolve({error: true, message:'cannot_update_post'})
