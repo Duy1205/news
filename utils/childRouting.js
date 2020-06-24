@@ -1,4 +1,5 @@
 const jwt       = require('../utils/jwt');
+const toastr    = require('toastr');
 let POST_MODEL  = require('../models/post');
 let TOPIC_MODEL = require('../models/topic');
 let COMMENT_MODEL = require('../models/comment');

@@ -14,7 +14,13 @@ var postSchema = new Schema({
         ref: "user",
         default: []
     }],
-    like : Number,
+    
+    like : [{
+        type: Schema.Types.ObjectId,
+        ref: "user",
+        default: []
+    }],
+
     comments: [{
         type: Schema.Types.ObjectId,
         ref: 'comment',

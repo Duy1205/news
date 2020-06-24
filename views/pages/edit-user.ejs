@@ -9,6 +9,10 @@
             position: absolute;
             z-index: -1;
          }
+         .avatar img{
+            width: 100px;
+            height: auto;
+         }
          </style>
          <div id="content-page" class="content-page">
             <div class="container">
@@ -28,8 +32,9 @@
                                     <input type="text" class="form-control" id="name"  name="name" value="<%= infoUser.fullname%>">
                                  </div>
                                  <form>
-                                    <div class="form-group">
+                                    <div class="form-group avatar">
                                       <label for="exampleFormControlFile1">Ảnh Đại Diện</label>
+                                      <img src="../images/thumbs/fa1.jpg" alt="avatar">
                                       <input type="file" class="form-control-file" id="exampleFormControlFile1">
                                     </div>
                                   </form>
@@ -41,7 +46,8 @@
                                   </div>
                                  <div class="form-group">
                                     <label for="uname" class="col-sm-2 col-form-label">Mật Khẩu</label>
-                                    <input type="text" readonly class="form-control" id="password"  name="password" value="<%= infoUser.password%>">
+                                    <input type="text" readonly class="form-control" id="password"  name="password" value="*******">
+                                    <br>
                                     <div class="form-group">
                                           <a href="/users/edit-password/<%= infoUser._id %> ">
                                              <button class="btn btn-success" id="btnUpdate" type='submit'>
@@ -51,7 +57,7 @@
                                           </a>
                                     </div>
                                  </div>
-                                 <button type="submit" _userID=<%= infoUser._id%> class="btn btn-primary btnSave">Lưu lại</button>
+                                 <button type="submit" _userID=<%= infoUser._id%> class="btn btn-primary btnSave">Lưu lại</button>&nbsp;
                                  <button type="reset" class="btn iq-bg-danger btnCancle"><a href="/">Hủy</a></button>
                               </form>
                            </div>
