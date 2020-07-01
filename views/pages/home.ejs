@@ -9,63 +9,63 @@
 						<div class="content-left">
 							<article class="post">
 								<% if(listPost && listPost.length){ %>
-									<% for( let index = 0; index < 1; index++ ) { %>
+									<% listPost.slice(0,1).forEach(item => { %>
+									 
 										<div class="thumb">
-											<a href="/posts/info-post?postID=<%=listPost[index]._id%>"><img src="../images/thumbs/fa2.jpg" alt="img"></a>
+											<a href="/posts/info-post?postID=<%= item._id%>"><img src="/images/news/<%=item.avatar %>" width="1500px" height="1500px" alt="avatar"></a>
 										</div>
 										<div class="cat">
-											<a href="/topics/info-topic?topicID=<%=listPost[index].topic._id%>"><%=listPost[index].topic.name%></a>
+											<a href="/topics/info-topic?topicID=<%=item.topic._id%>"><%=item.topic.name%></a>
+											
 										</div>
-										<h3><a href="/posts/info-post?postID=<%=listPost[index]._id%>"><%=listPost[index].name%></a></h3>
-										<div class="post-meta">
-											<div class="activity">
-												<!--<span class="views">345</span>-->
-												<span class="views">Lượt xem: <%= listPost[index].seen.length %></span>
-												<span class="comment"><a href="#">Nhận Xét: <%= listPost[index].comments.length %></a></span>
-											</div>
-										</div>
-									<% } %>
+										<h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+										<p class=""><%-item.content.substring(0,142)%>...<span><a href="/posts/info-post?postID=<%= item._id%>">Xem thêm</a></span></p>
+										<br>	
+										<i class="far fa-eye"></i> <%= item.seen.length %> &nbsp; &nbsp;&nbsp;
+											<i class="fas fa-comment-dots"></i>  <%= item.comments.length %>
+									<% }) %>
                             	<% }%>
 							</article><!--  /.post -->
 						</div><!-- /.content-left -->
 						<div class="content-right">
 							<article class="post">
 								<% if(listPost && listPost.length){ %>
-									<% for( let index = 1; index < 2; index++ ) { %>
+									<% listPost.slice(1,2).forEach(item => { %>
+									 
 										<div class="thumb">
-											<a href="/posts/info-post?postID=<%= listPost[index]._id%>"><img src="../images/thumbs/fa3.jpg" alt="img"></a>
+											<a href="/posts/info-post?postID=<%= item._id%>"><img src="/images/news/<%=item.avatar %>" width="230px" height="230px" alt="avatar"></a>
 										</div>
 										<div class="cat">
-											<a href="/topics/info-topic?topicID=<%=listPost[index].topic._id%>"><%=listPost[index].topic.name%></a>
-											
+											<a href="/topics/info-topic?topicID=<%=item.topic._id%>"><%=item.topic.name%></a>
 										</div>
-										<h3><a href="/posts/info-post?postID=<%=listPost[index]._id%>"><%=listPost[index].name%></a></h3>
-										<div class="activity">
-											<!-- <span class="views">12</span> -->
-											<span class="views">Lượt xem: <%= listPost[index].seen.length %></span>
-											<span class="comment"><a href="#">Nhận Xét: <%= listPost[index].comments.length %></a></span>
-										</div>
-									<% } %>
+										<h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+										<p class=""><%-item.content.substring(0, 145)%>...<span><a href="/posts/info-post?postID=<%= item._id%>">Xem thêm</a></span></p>
+										<br>	
+										<i class="far fa-eye"></i> <%= item.seen.length %> &nbsp; &nbsp;&nbsp;
+											<i class="fas fa-comment-dots"></i>  <%= item.comments.length %>
+									<% }) %>
                             	<% }%>
 							</article><!--  /.post -->
+							<div class="content-right">
+								
+							</div>
 							<article class="post">
 								
 								<% if(listPost && listPost.length){ %>
-									<% for( let index = 2; index < 3; index++ ) { %>
+									<% listPost.slice(2,3).forEach(item => { %>
+									 
 										<div class="thumb">
-											<a href="/posts/info-post?postID=<%= listPost[index]._id%>"><img src="../images/thumbs/fa1.jpg" alt="img"></a>
+											<a href="/posts/info-post?postID=<%= item._id%>"><img src="/images/news/<%=item.avatar %>" width="230px" height="230px" alt="avatar"></a>
 										</div>
 										<div class="cat">
-											<a href="/topics/info-topic?topicID=<%=listPost[index].topic._id%>"><%=listPost[index].topic.name%></a>
-											
+											<a href="/topics/info-topic?topicID=<%=item.topic._id%>"><%=item.topic.name%></a>
 										</div>
-										<h3><a href="/posts/info-post?postID=<%=listPost[index]._id%>"><%=listPost[index].name%></a></h3>
-										<div class="activity">
-											<!-- <span class="views">12</span> -->
-											<span class="views">Lượt xem: <%= listPost[index].seen.length %></span>
-											<span class="comment"><a href="#">Nhận Xét: <%= listPost[index].comments.length %></a></span>
-										</div>
-									<% } %>
+										<h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+										<p class=""><%-item.content.substring(0,150)%>...<span><a href="/posts/info-post?postID=<%= item._id%>">Xem thêm</a></span></p>
+										<br>	
+										<i class="far fa-eye"></i> <%= item.seen.length %> &nbsp; &nbsp;&nbsp;
+											<i class="fas fa-comment-dots"></i>  <%= item.comments.length %>
+									<% }) %>
                             	<% }%>
 							</article><!--  /.post -->
 						</div><!-- /.content-right -->
@@ -77,77 +77,39 @@
 						</div>	
 						<div class="content-left">
 							<article class="post">
-								<div class="thumb">
-									<a href="#"><img src="../images/thumbs/8.jpg" alt="img"></a>
-								</div>
-								<div class="cat">
-									<a href>Mustreads</a>
-								</div>
-								<h3><a href="#">If you wanted to get rich</a></h3>
-								<p class="excerpt-entry">I think your best bet would be to start or join a startup. That's been a reliable way to get rich for hundreds of years.The word "startup" dates from the 10s, but what happens in one is very similar.</p>
-								<div class="post-meta">
-									<span class="author">By <a href="#">John Doe</a></span>
-									<div class="activity">
-										<span class="views">345</span><span class="comment"><a href="#">15</a></span>
-									</div>
-								</div>
+								<% if(listSpecialPost && listSpecialPost.length){ %>
+									<% listSpecialPost.slice(0,1).forEach(item => { %>
+									 
+										<div class="thumb">
+											<a href="/posts/info-post?postID=<%= item._id%>"><img src="/images/news/<%=item.avatar %>" alt="avatar"></a>
+										</div>
+										<div class="cat">
+											<a href="/topics/info-topic?topicID=<%=item.topic._id%>"><%=item.topic.name%></a>
+											
+										</div>
+										<h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+										<p class=""><%-item.content.substring(0,30)%>...<span><a href="/posts/info-post?postID=<%= item._id%>">Xem thêm</a></span></p>
+										<br>	
+										<i class="far fa-eye"></i> <%= item.seen.length %> &nbsp; &nbsp;&nbsp;
+											<i class="fas fa-comment-dots"></i>  <%= item.comments.length %>
+									<% }) %>
+                            	<% }%>
 							</article><!--  /.post -->
 						</div><!-- /.content-left -->
 						<div class="content-right">
-							<article class="post">
-								<div class="thumb">
-									<a href="#"><img src="../images/thumbs/2.jpg" alt="img"></a>
-								</div>
-								<div class="content">
-									<h3><a href="#">Lots of people get rich knowing nothing more than that.</a></h3>
-									<span class="date">7:00 am. Ngày 12 Tháng 6 2000</span>
-								</div>
-							</article><!--  /.post -->
-							<article class="post">
-								<div class="thumb">
-									<a href="#"><img src="../images/thumbs/2-2.jpg" alt="img"></a>
-								</div>
-								<div class="content">
-									<h3><a href="#">Lots of people get rich knowing nothing more than that.</a></h3>
-									<span class="date">7:00 Ngày 12 Tháng 6 2000</span>
-								</div>
-							</article><!--  /.post -->
-							<article class="post">
-								<div class="thumb">
-									<a href="#"><img src="../images/thumbs/2-3.jpg" alt="img"></a>
-								</div>
-								<div class="content">
-									<h3><a href="#">Lots of people get rich knowing nothing more than that.</a></h3>
-									<span class="date">7:00 Ngày 12 Tháng 6 2000</span>
-								</div>
-							</article><!--  /.post -->
-							<article class="post">
-								<div class="thumb">
-									<a href="#"><img src="../images/thumbs/2-4.jpg" alt="img"></a>
-								</div>
-								<div class="content">
-									<h3><a href="#">Lots of people get rich knowing nothing more than that.</a></h3>
-									<span class="date">7:00 Ngày 12 Tháng 6 2000</span>
-								</div>
-							</article><!--  /.post -->
-							<article class="post">
-								<div class="thumb">
-									<a href="#"><img src="../images/thumbs/2-5.jpg" alt="img"></a>
-								</div>
-								<div class="content">
-									<h3><a href="#">Lots of people get rich knowing nothing more than that.</a></h3>
-									<span class="date">7:00 Ngày 12 Tháng 6 2000</span>
-								</div>
-							</article><!--  /.post -->
-							<article class="post">
-								<div class="thumb">
-									<a href="#"><img src="../images/thumbs/2.jpg" alt="img"></a>
-								</div>
-								<div class="content">
-									<h3><a href="#">Lots of people get rich knowing nothing more than that.</a></h3>
-									<span class="date">7:00 Ngày 12 Tháng 6 2000</span>
-								</div>
-							</article><!--  /.post -->
+								<% if(listSpecialPost && listSpecialPost.length){ %>
+									<% listSpecialPost.slice(1,7).forEach(item => { %>
+										<article class="post">
+											<div class="thumb">
+												<a href="/posts/info-post?postID=<%= item._id%>"><img style="max-width : 80px ; max-height: 80px; " src="/images/news/<%=item.avatar %>" width="80px" height="80px	" alt="avatar"></a>
+											</div>
+											<div class="content">
+												<h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+												<div class="date"><%=moment(item.createAt).format('L');%></div>
+											</div>
+										</article><!--  /.post -->
+									<% }) %>
+                            	<% }%>
 						</div><!-- /.content-right -->
 					</div><!-- /.popular-posts -->
 				</div><!-- /.col-md-8 -->
@@ -157,17 +119,19 @@
 							<h5 class="widget-title">Những Bài Viết Gần Đây</h5>
 							<ul>
                             <% if(listPost && listPost.length){ %>
-                            <%for (let index = 0; index < 6; index++) {%>
+                            <% listPost.slice(8,14).forEach(item => { %>
+							 
                                 <li>
 									<div class="thumb">
-										<a href="/posts/info-post?postID=<%=listPost[index]._id%>"><img src="../images/thumbs/sad.jpg" alt="img"></a>
+										<a href="/posts/info-post?postID=<%= item._id%>"><img style="max-width : 80px ; max-height: 80px; " src="/images/news/<%=item.avatar %>" width="80px" height="80px	" alt="avatar"></a>
 									</div>
 									<div class="content">
-										<h3><a href="/posts/info-post?postID=<%=listPost[index]._id%>"><%=listPost[index].name%></a></h3>
-										<div class="date"><%=moment(listPost[index].createAt).startOf('hour').fromNow();%></div>
+										<h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+										<div class="date"><%=moment(item.createAt).startOf('hour').fromNow();%></div>
 									</div>
 								</li>
-                            <% }%>
+							<% }) %>
+
                             <% }%>
 							</ul>
 						</div><!-- /.widget-recent -->
@@ -194,101 +158,49 @@
 							<div class="tabs">
 								<ul class="menu-tab">
 									<li class="active"><a href="#">Nhận Xét</a></li>
-								   	<li><a href="#">Phổ Biến</a></li>
+								   	<li><a href="#">Xem Nhiều</a></li>
 								   	<li><a href="#">Tags</a></li>
 								</ul><!-- /.menu-tab -->
 								<div class="content-tab">
 								   	<div class="content">
-										<ul class="comments">
-											<li>
-												<div class="avatar">
-													<a href="#"><img src="../images/user.jpg" alt="image"></a>
-												</div>
-												<p><a href="#">Jack</a> on <a href="#">I think your best bet would be to start or join a startup.</a> 2 hours</p>
-											</li>	
-											<li>
-												<div class="avatar">
-													<a href="#"><img src="../images/user.jpg" alt="image"></a>
-												</div>
-												<p><a href="#">Jack</a> on <a href="#">I think your best bet would be to start or join a startup.</a> 2 hours</p>
-											</li>
-											<li>
-												<div class="avatar">
-													<a href="#"><img src="../images/user.jpg" alt="image"></a>
-												</div>
-												<p><a href="#">Jack</a> on <a href="#">I think your best bet would be to start or join a startup.</a> 2 hours</p>
-											</li>
-											<li>
-												<div class="avatar">
-													<a href="#"><img src="../images/user.jpg" alt="image"></a>
-												</div>
-												<p><a href="#">Jack</a> on <a href="#">I think your best bet would be to start or join a startup.</a> 2 hours</p>
-											</li>
-											<li>
-												<div class="avatar">
-													<a href="#"><img src="../images/user.jpg" alt="image"></a>
-												</div>
-												<p><a href="#">Jack</a> on <a href="#">I think your best bet would be to start or join a startup.</a> 2 hours</p>
-											</li>
-										</ul>
+										<% if(listPost && listPost.length){ %>
+											<% listPost.slice(12,19).forEach(item => { %>
+											<ul class="comments">
+												<li>
+													<div class="avatar">
+														<a href="#"><img src="../images/user.jpg" alt="image"></a>
+													</div>
+													<p><a href="#">Duy</a> bình luận <a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a> 2 hours</p>
+												</li>	
+											<% }) %>
+										<% }%>
+											</ul>
 								   	</div><!-- /.comments -->
 								   	<div class="content">
-										<ul class="pop-posts">
-											<li>
-												<div class="thumb">
-													<a href="#"><img alt src="../images/thumbs/1.jpg"></a>
-												</div>
-												<div class="text">
-													<a href="#">If you wanted to get rich, how would you do it?</a>
-													<i>Aug 1, 2014</i>
-												</div>
-											</li>
-											<li>
-												<div class="thumb">
-													<a href="#"><img alt src="../images/thumbs/1-2.jpg"></a>
-												</div>
-												<div class="text">
-													<a href="#">If you wanted to get rich, how would you do it?</a>
-													<i>Aug 1, 2014</i>
-												</div>
-											</li>
-											<li>
-												<div class="thumb">
-													<a href="#"><img alt src="../images/thumbs/1-3.jpg"></a>
-												</div>
-												<div class="text">
-													<a href="#">If you wanted to get rich, how would you do it?</a>
-													<i>Aug 1, 2014</i>
-												</div> 
-											</li>
-											<li>
-												<div class="thumb">
-													<a href="#"><img alt src="../images/thumbs/1-4.jpg"></a>
-												</div>
-												<div class="text">
-													<a href="#">If you wanted to get rich, how would you do it?</a>
-													<i>Aug 1, 2014</i>
-												</div> 
-											</li>
-											<li>
-												<div class="thumb">
-													<a href="#"><img alt src="../images/thumbs/1-5.jpg"></a>
-												</div>
-												<div class="text">
-													<a href="#">If you wanted to get rich, how would you do it?</a>
-													<i>Aug 1, 2014</i>
-												</div>
-											</li>
-										</ul>
+										<% if(listTopView && listTopView.length){ %>
+											<% listTopView.slice(0,6).forEach(item => { %>
+												<ul class="pop-posts">
+													<li>
+														<div class="thumb">
+															<a href="/posts/info-post?postID=<%= item._id%>"><img style="max-width : 80px ; max-height: 80px; " src="/images/news/<%=item.avatar %>" width="80px" height="80px	" alt="avatar"></a>
+														</div>
+														<div class="text">
+															<a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a>
+															<div class="date"><i><%=moment(item.createAt).format('L');%></i></div>
+														</div>
+													</li>
+												</ul>
+											<% }) %>
+										<% }%>
+
 								   	</div><!-- /.comments -->
 								   	<div class="content">
 										<div class="tags">
-											<a href="#">Doanh Nhân</a>
-											<a href="#">Đời Sống</a>
-											<a href="#">Tin Tức Mới</a>
-											<a href="#">Giải Trí</a>
-											<a href="#">Thể Thao</a>
-											<a href="#">Game</a>
+											<% if(listTopic && listTopic.length){ %>
+												<% listTopic.slice(0,7).forEach(item => { %>
+													<a href="/topics/info-topic?topicID=<%= item._id %> "><%= item.name %> </a>
+												<% }) %>
+											<% }%>
 										</div>
 								   	</div><!-- /.comments -->
 								</div><!-- /.content-tab -->
@@ -305,49 +217,67 @@
 								<a class="tumblr" href="#"><i class="fa fa-tumblr"></i></a>
 							</div>
 						</div> -->
-						<div class="widget widget-categories gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
-							<h5 class="widget-title">Lưu Trữ</h5>
-							<ul class="cat-list">
-								<li><a href="#">Tháng 12 2020 <span>(0)</span></a></li>
-								<li><a href="#">Tháng 11 2020 <span>(22)</span></a></li>
-								<li><a href="#">Tháng 10 2020 <span>(17)</span></a></li>
-								<li><a href="#">Tháng 7 2020 <span>()</span></a></li>
-								<li><a href="#">Tháng 5 2020 <span>(14)</span></a></li>
-								<li><a href="#">Tháng 4 2020 <span>(10)</span></a></li>
-								<li><a href="#">Tháng 3 2020 <span>(1)</span></a></li>
-								<li><a href="#">Tháng 11 2019 <span>(1)</span></a></li>
-							</ul>
-						</div><!-- /.widget-categories -->
+						<div class="widget widget-tabs gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
+							<div class="tabs">
+								<ul class="menu-tab">
+									<li class="active"><a href="#">Tác Giả</a></li>
+								</ul><!-- /.menu-tab -->
+								<div class="content-tab">
+								   	<div class="content">
+										<% if(listUser && listUser.length){ %>
+											<% listUser.forEach(item => { %>
+												<% if(item && item.role == 1){ %> 
+													<ul class="comments">
+														<li>
+															<div class="avatar">
+																<a href="#"><img src="/images/news/<%= item.avatar%>" width="70px" height="70px" alt="image"></a> <br>
+															</div>
+															<p><a><%= item.fullname %></a> <br> Nhà văn </p> 
+														</li>	
+													</ul>
+												<% }%>
+											<% }) %>
+										<% }%>
+								   	</div><!-- /.comments -->
+								</div><!-- /.content-tab -->
+							</div><!-- /.tabs -->
+						</div>
+
+						<%if( infoUser && infoUser.role == 1) { %> 
+							<div class="widget widget-categories gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
+								<h5 class="widget-title">Lưu Trữ</h5>
+								<ul class="cat-list">
+									<%if (listPost && listPost.length) {%>
+										<a href="/posts/postT7">Tháng 7 2020<span>(<%= listPost.slice(0,10).length %>)</span></a> <hr>
+										<a href="/posts/postT6">Tháng 6 2020<span>(<%= listPost.slice(10,20).length %>)</span></a>
+									<%}%>
+								</ul>
+							</div><!-- /.widget-categories -->
+						<% } %> 
 					</div><!-- /.sidebar -->
 				</div><!-- /.col-md-4 -->
-				<div class="col-md-12">
+				<div class="col-md-6">
+					<div class="gn-line"></div>
+					<h4>ĐỪNG BỎ LỠ</h4>
 				    <div class="gnSlider gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
 				        <div class="flex-container">
 				            <div class="flexslider loading">
 				                <ul class="slides">
-				                    <li>
-				                        <div class="item-wrap">
-				                        	<img src="../images/slider/1.jpg" alt="image">
-				                            <p class="item" data-bottomtext="0">Kenneth Cole Challenges You to Do Good Deeds — and Prove it via Google Glass</p>
-				                        </div>
-				                    </li>
-				                    <li>
-				                        <div class="item-wrap">
-				                        	<img src="../images/slider/2.jpg" alt="image">
-				                            <p class="item" data-bottomtext="0">Kenneth Cole Challenges You to Do Good Deeds — and Prove it via Google Glass</p>
-				                        </div>
-				                    </li>
-				                    <li>
-				                        <div class="item-wrap">
-				                        	<img src="../images/slider/3.jpg" alt="image">
-				                            <p class="item" data-bottomtext="0">Kenneth Cole Challenges You to Do Good Deeds — and Prove it via Google Glass</p>
-				                        </div>
-				                    </li>
+									<% if(listPost && listPost.length){ %>
+										<% listPost.slice(14,18).forEach(item => { %>
+										<li>
+											<div class="item-wrap">
+												<a href="/posts/info-post?postID=<%= item._id%>"><img style="max-width : 700px ; max-height: 700px; " src="/images/news/<%=item.avatar %>" width="750px" height="450px" alt="avatar"></a>
+												<p class="item" data-bottomtext="0"><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></p>
+											</div>
+										</li>
+										<% }) %>
+									<% }%>
 				                </ul>
 				            </div>
 				        </div>
 				    </div><!-- /.gnSlider -->
-				</div><!-- /.col-md-12 -->
+				</div>
 				<div class="col-md-12">
 					<div class="trending-posts">
 						<div class="gn-line"></div>
@@ -356,91 +286,124 @@
 						</div>
 						<div class="one-fourth gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
 							<article class="post first">
-								<div class="thumb">
-									<a href="#"><img src="../images/thumbs/5.jpg" alt="img"></a>
-								</div>
-								<span class="date"> Ngày 6 Tháng 10 2020</span>
-								<h3><a href="#">This pays especially well in technology, where you earn a premium for working fast.</a></h3>
+								<% if(listPost && listPost.length){ %>
+									<%listPost.slice(9,10).forEach(item => {%>
+										<div class="thumb">
+											<a href="/posts/info-post?postID=<%= item._id%>"><img style="max-width : 250px ; max-height: 250px; " src="/images/news/<%=item.avatar %>" width="300px" height="300px	" alt="avatar"></a>
+										</div>
+											<h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+										<% }) %>
+								<% }%>
 							</article><!--  /.post -->
-							<article class="post">
-								<span class="date"> Ngày 6 Tháng 10 2020</span>
-								<h3><a href="#">Here is a brief sketch of the economic proposition.</a></h3>
-							</article><!--  /.post -->
-							<article class="post">
-								<span class="date"> Ngày 6 Tháng 10 2020</span>
-								<h3><a href="#">Startups are not magic.</a></h3>
-							</article><!--  /.post -->
-							<article class="post">
-								<span class="date"> Ngày 6 Tháng 10 2020</span>
-								<h3><a href="#">Like all back-of-the-envelope calculations, this one has a lot of wiggle room.</a></h3>
-							</article><!--  /.post -->
-							<article class="post">
-								<span class="date"> Ngày 6 Tháng 10 2020</span>
-								<h3><a href="#">Imagine the stress of working for the Post Office for fifty years.</a></h3>
-							</article><!--  /.post -->
-						</div>
-						<div class="one-fourth gn-animation" data-animation="fadeInUp" data-animation-delay="0.2s" data-animation-offset="75%">
-							<article class="post first">
-								<div class="thumb">
-									<a href="#"><img src="../images/thumbs/5-2.jpg" alt="img"></a>
-								</div>
-								<span class="date"> Ngày 6 Tháng 10 2020</span>
-								<h3><a href="#">Lots of people get rich knowing nothing more than that.</a></h3>
-							</article><!--  /.post -->
-							<article class="post">
-								<span class="date"> Ngày 6 Tháng 10 2020</span>
-								<h3><a href="#">If you're a good hacker in your mid twenties, you can get a job paying about $80,000 per year.</a></h3>
-							</article><!--  /.post -->
-							<article class="post">
-								<span class="date"> Ngày 6 Tháng 10 2020</span>
-								<h3><a href="#">They don't change the laws of wealth creation.</a></h3>
-							</article><!--  /.post -->
-							<article class="post">
-								<span class="date"> Ngày 6 Tháng 10 2020</span>
-								<h3><a href="#">I wouldn't try to defend the actual numbers. But I stand by the structure of the calculation.</a></h3>
-							</article><!--  /.post -->
+							<% if(listPost && listPost.length){ %>
+								<%listPost.slice(10,14).forEach(item => {%>
+									<article class="post">
+										<div class="date"><%=moment(item.createAt).format('LL');%></div>
+										<h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+									</article><!--  /.post -->
+								<% }) %>
+							<% }%>
+							&nbsp;&nbsp;&nbsp;
+							<% if(listPost && listPost.length){ %>
+								<%listPost.slice(10,11).forEach(item => {%>
+										<div class="cat">
+											<a href="/topics/info-topic?topicID=<%=item.topic._id%>"><%=item.topic.name%></a>
+										</div>
+								<% }) %>
+							<% }%>
 						</div>
 						<div class="one-fourth gn-animation" data-animation="fadeInUp" data-animation-delay="0.4s" data-animation-offset="75%">
 							<article class="post first">
-								<div class="thumb">
-									<a href="#"><img src="../images/thumbs/5-3.jpg" alt="img"></a>
-								</div>
-								<span class="date"> Ngày 6 Tháng 10 2020</span>
-								<h3><a href="#">I think your best bet would be to start or join a startup.</a></h3>
+								<% if(listPost && listPost.length){ %>
+									<%listPost.slice(13,14).forEach(item => {%>
+										<div class="thumb">
+											<a href="/posts/info-post?postID=<%= item._id%>"><img style="max-width : 250px ; max-height: 250px; " src="/images/news/<%=item.avatar %>" width="300px" height="300px	" alt="avatar"></a>
+										</div>
+											<h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+										<% }) %>
+								<% }%>
 							</article><!--  /.post -->
-							<article class="post">
-								<span class="date"> Ngày 6 Tháng 10 2020</span>
-								<h3><a href="#">You could probably work twice as many hours as a corporate employee.</a></h3>
-							</article><!--  /.post -->
-							<article class="post">
-								<span class="date"> Ngày 6 Tháng 10 2020</span>
-								<h3><a href="#">Imagine the stress of working for the Post Office for fifty years. In a startup you compress all this stress into three or four years.</a></h3>
-							</article><!--  /.post -->
-							<article class="post">
-								<span class="date"> Ngày 6 Tháng 10 2020</span>
-								<h3><a href="#">This pays especially well in technology, where you earn a premium for working fast.</a></h3>
-							</article><!--  /.post -->
+							<% if(listPost && listPost.length){ %>
+								<%listPost.slice(14,18).forEach(item => {%>
+									<article class="post">
+										<div class="date"><%=moment(item.createAt).format('LL');%></div>
+										<h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+									</article><!--  /.post -->
+								<% }) %>
+							<% }%>
+							&nbsp;&nbsp;&nbsp;
+							<% if(listPost && listPost.length){ %>
+								<%listPost.slice(14,15).forEach(item => {%>
+										<div class="cat">
+											<a href="/topics/info-topic?topicID=<%=item.topic._id%>"><%=item.topic.name%></a>
+										</div>
+								<% }) %>
+							<% }%>
 						</div>
+						<div class="one-fourth gn-animation" data-animation="fadeInUp" data-animation-delay="0.2s" data-animation-offset="75%">
+							<article class="post first">
+								<% if(listPost && listPost.length){ %>
+									<%listPost.slice(0,1).forEach(item => {%>
+										<div class="thumb">
+											<a href="/posts/info-post?postID=<%= item._id%>"><img style="max-width : 250px ; max-height: 250px; " src="/images/news/<%=item.avatar %>" width="300px" height="300px	" alt="avatar"></a>
+										</div>
+											<h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+										<% }) %>
+								<% }%>
+							</article><!--  /.post -->
+							<% if(listPost && listPost.length){ %>
+								<%listPost.slice(1,4).forEach(item => {%>
+									<article class="post">
+										<div class="date"><%=moment(item.createAt).format('LL');%></div>
+										<h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+									</article><!--  /.post -->
+								<% }) %>
+							<% }%>
+							&nbsp;&nbsp;&nbsp;
+							<% if(listPost && listPost.length){ %>
+								<%listPost.slice(1,2).forEach(item => {%>
+										<div class="cat">
+											<a href="/topics/info-topic?topicID=<%=item.topic._id%>"><%=item.topic.name%></a>
+										</div>
+								<% }) %>
+							<% }%>
+						</div>
+						
 						<div class="one-fourth last gn-animation" data-animation="fadeInUp" data-animation-delay="0s" data-animation-offset="75%">
 							<article class="post first">
-								<div class="thumb">
-									<a href="#"><img src="../images/thumbs/5-4.jpg" alt="img"></a>
-								</div>
-								<span class="date"> Ngày 6 Tháng 10 2020</span>
-								<h3><a href="#">That's been a reliable way to get rich for hundreds of years.</a></h3>
+								<% if(listPost && listPost.length){ %>
+									<%listPost.slice(4,5).forEach(item => {%>
+										<div class="thumb">
+											<a href="/posts/info-post?postID=<%= item._id%>"><img style="max-width : 250px ; max-height: 250px; " src="/images/news/<%=item.avatar %>" width="300px" height="300px	" alt="avatar"></a>
+										</div>
+											<h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+										<% }) %>
+								<% }%>
 							</article><!--  /.post -->
-							<article class="post">
-								<span class="date"> Ngày 6 Tháng 10 2020</span>
-								<h3><a href="#">Like all back-of-the-envelope calculations, this one has a lot of wiggle room.</a></h3>
-							</article><!--  /.post -->
-							<article class="post">
-								<span class="date"> Ngày 6 Tháng 10 2020</span>
-								<h3><a href="#">Three million? How do I get to be a billionaire, like Bill Gates?</a></h3>
-							</article><!--  /.post -->
-							<article class="post">
-								<span class="date"> Ngày 6 Tháng 10 2020</span>
-								<h3><a href="#">If $3 million a year seems high to some people, it will seem low to others.</a></h3>
-							</article><!--  /.post -->
+							<% if(listPost && listPost.length){ %>
+								<%listPost.slice(5,7).forEach(item => {%>
+									<article class="post">
+										<div class="date"><%=moment(item.createAt).format('LL');%></div>
+										<h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+									</article><!--  /.post -->
+								<% }) %>
+							<% }%>
+							<% if(listPost && listPost.length){ %>
+								<%listPost.slice(18,19).forEach(item => {%>
+									<article class="post">
+										<div class="date"><%=moment(item.createAt).format('LL');%></div>
+										<h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+									</article><!--  /.post -->
+								<% }) %>
+							<% }%>
+							&nbsp;&nbsp;&nbsp;
+							<% if(listPost && listPost.length){ %>
+								<%listPost.slice(18,19).forEach(item => {%>
+										<div class="cat">
+											<a href="/topics/info-topic?topicID=<%=item.topic._id%>"><%=item.topic.name%></a>
+										</div>
+								<% }) %>
+							<% }%>
 						</div>
 					</div><!-- /.trending-posts -->
 					<div class="gn-line"></div>

@@ -41,7 +41,7 @@ module.exports = class User extends USER_COLL {
         });
     }
 
-    static insert({ email, fullname, password, avatar }) {
+    static insert({ email, fullname, password, author, avatar }) {
         return new Promise(async resolve => {
             try {
                 if (!email)
@@ -55,6 +55,7 @@ module.exports = class User extends USER_COLL {
                     email,
                     fullname,
                     password,
+                    author,
                     avatar
                 };
 
@@ -93,7 +94,7 @@ module.exports = class User extends USER_COLL {
                 if (!ObjectID.isValid(userID))
                     return resolve({ error: true, message: 'params_invalid' });
 
-                let infoUser = await USER_COLL.findById(userID)
+                let infoUser = await USER_COLL.findById(userID).sort({createAt: -1})
 
                 if (!infoUser) return resolve({ error: true, message: 'cannot_get_info_data' });
 
@@ -124,17 +125,17 @@ module.exports = class User extends USER_COLL {
         })
     }
 
-    static update({ userID, fullname, password }) {
+    static update({ userID, fullname, avatar }) {
         return new Promise(async resolve => {
             try {
-
+                console.log(avatar);
+                
                 if (!ObjectID.isValid(userID)) //|| !ObjectID.isValid(userUpdate)
                     return resolve({ error: true, message: 'params_invalid' });
 
                 let dataUpdate = {
                     fullname,
-                    password
-
+                    avatar
                 }
 
                 let infoAfterUpdate = await USER_COLL.findByIdAndUpdate(userID, dataUpdate, { new: true });

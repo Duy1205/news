@@ -6,42 +6,28 @@ const USER_COLL = require('../database/user-coll');
 
 module.exports = class Comment extends COMMENT_COLL {
 
-    static insert({author, content, postID}) {
+    static insert({ content, author, postID }) {
         return new Promise(async resolve => {
             try {
 
                 if (!content || !ObjectID.isValid(postID, author))
                 return resolve({ error: true, message: 'params_invalid' });
 
-                let dataInsert = { 
-                    content,
-                    author,
-                    post: postID
-                };
 
-                console.log({ dataInsert })
-                
-
-                let infoAfterInsert = new COMMENT_COLL(dataInsert);
+                let infoAfterInsert = new COMMENT_COLL({content, author, post: postID});
                 let saveDataInsert = await infoAfterInsert.save();
 
                 if (!saveDataInsert) return resolve({ error: true, message: 'cannot_insert_comment' });
 
-                let {_id: commentID} =  saveDataInsert;
-                // console.log(commentID);
-                // console.log(post);
-                
-
-                let PostAfterUpdate = await POST_COLL.findByIdAndUpdate(postID, {
+                let commentOfPost = await POST_COLL.findByIdAndUpdate(postID, {
                     $addToSet:{
                         comments: infoAfterInsert._id
                     }
                 }, {new: true})
 
-                if( !PostAfterUpdate ){
-                    return resolve({error: true, message:'cannot_update_post'})
+                if(!commentOfPost){
+                    return resolve({error: true, message:'cannot_add_comment'})
                 }
-
                 resolve({ error: false, data: infoAfterInsert });
 
             } catch (error) {
@@ -53,8 +39,10 @@ module.exports = class Comment extends COMMENT_COLL {
     static getList() {
         return new Promise(async resolve => {
             try {
-                let listComment = await COMMENT_COLL.find().sort({ createAt: -1 });
-                // console.log({listComment});
+                let listComment = await COMMENT_COLL.find()
+                .populate('post')
+                .populate('author')
+                .sort({ createAt: -1 });
                 
                 if (!listComment) return resolve({ error: true, message: 'cannot_get_list_data' });
 
@@ -75,6 +63,8 @@ module.exports = class Comment extends COMMENT_COLL {
                     return resolve({ error: true, message: 'params_invalid' });
 
                 let infoComment = await COMMENT_COLL.findById(commentID)
+                .populate('author')
+                .populate('post')
 
                 if (!infoComment) return resolve({ error: true, message: 'cannot_get_info_data' });
 
@@ -93,12 +83,12 @@ module.exports = class Comment extends COMMENT_COLL {
                 if (!ObjectID.isValid(commentID))
                     return resolve({ error: true, message: 'params_invalid' });
 
-                let infoAfterRemove = await COMMENT_COLL.findByIdAndDelete({ commentID, postID });
+                let infoAfterRemove = await COMMENT_COLL.findByIdAndDelete(commentID);
 
                 if (!infoAfterRemove)
                     return resolve({ error: true, message: 'cannot_remove_data' });
 
-                let removeCommentToPost = await COMMENT_COLL.findByIdAndUpdate(postID, {
+                let removeCommentToPost = await POST_COLL.findByIdAndUpdate(postID, {
                     $pull: { comments: commentID }
                 }, {new: true})
 

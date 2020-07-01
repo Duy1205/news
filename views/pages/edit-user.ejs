@@ -12,6 +12,7 @@
          .avatar img{
             width: 100px;
             height: auto;
+            border-radius: 50%;
          }
          </style>
          <div id="content-page" class="content-page">
@@ -33,9 +34,9 @@
                                  </div>
                                  <form>
                                     <div class="form-group avatar">
-                                      <label for="exampleFormControlFile1">Ảnh Đại Diện</label>
-                                      <img src="../images/thumbs/fa1.jpg" alt="avatar">
-                                      <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                      <label for="exampleFormControlFile1">Ảnh Đại Diện</label>&nbsp;&nbsp;&nbsp;
+                                      <img style="max-width : 75px ; max-height : 75px" src="/images/news/<%= infoUser.avatar%>" alt="avatar">
+                                      <input type="file" class="form-control-file" id="avatar">
                                     </div>
                                   </form>
                                  <div class="form-group">
@@ -44,18 +45,6 @@
                                       <input type="text" readonly class="form-control" id="email" value="<%= infoUser.email%>">
                                     </div>
                                   </div>
-                                 <div class="form-group">
-                                    <label for="uname" class="col-sm-2 col-form-label">Mật Khẩu</label>
-                                    <input type="text" readonly class="form-control" id="password"  name="password" value="*******">
-                                    <br>
-                                    <div class="form-group">
-                                          <a href="/users/edit-password/<%= infoUser._id %> ">
-                                             <button class="btn btn-success" id="btnUpdate" type='submit'>
-                                             <i class="fa fa-check-square-o"></i>
-                                             Đổi Mật Khẩu
-                                             </button>
-                                          </a>
-                                    </div>
                                  </div>
                                  <button type="submit" _userID=<%= infoUser._id%> class="btn btn-primary btnSave">Lưu lại</button>&nbsp;
                                  <button type="reset" class="btn iq-bg-danger btnCancle"><a href="/">Hủy</a></button>
@@ -76,24 +65,38 @@
       e.preventDefault();
       let userID = $(this).attr('_userID');
       let fullname = $('#name').val().trim();
-      let password = $('#password').val().trim();
+      // let password = $('#password').val().trim();
+      let _imageDemo = $('#avatar')[0].files[0];
 
-      if(!fullname || !password){
+      let formData = new FormData();
+
+      if(_imageDemo){
+         formData.append('avatar', _imageDemo);
+      }
+      formData.append('fullname', fullname);
+      // formData.append('password', password);
+
+      console.log({ fullname, _imageDemo })
+      if(!fullname){
          toastr.warning('Bạn cần phải nhập thêm nội dung','Nhập Thêm')
       }
       else{
 
+
       $.ajax({
          url: `/users/update-user/${userID}`,
          method: 'POST',
-         data: { fullname, password},
+         enctype: 'multipart/form-data',
+         data: formData,
+         processData: false,
+         contentType: false,
          success: resp => {
             console.log({ resp })
             //console.log(resp.error);
             
             if(!resp.error){
-            toastr.success('Sửa Thành Công','Thành Công')
-            window.location.href= "/";
+            toastr.success('Bạn Phải Đăng Nhập Lại','Đăng Xuất')
+            window.location.href= "/users/dang-nhap";
             // window.location.href="/dashboard"
             } else {
             toastr.error('Sửa Không Thành Công','Thất Bại')

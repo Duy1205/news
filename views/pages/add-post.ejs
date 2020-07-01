@@ -79,6 +79,9 @@
                                     </select>
                                  </div>
                                  <div class="form-group">
+                                      <input type="file" class="form-control-file" id="avatar">
+                                 </div>
+                                 <div class="form-group">
                                     <label for="uname">Title</label>
                                     <input type="text" class="form-control" id="title" name="title" value="">
                                  </div>
@@ -87,7 +90,7 @@
                                     <textarea class="ckeditor" cols="80" id="content" name="content" rows="10"></textarea>
                                  </div>
                                  <button type="submit" class="btn btn-primary btnSave">Lưu lại</button>
-                                 <button type="reset" class="btn iq-bg-danger btnCancle">Hủy</button>
+                                 <button type="reset" class="btn iq-bg-danger btnCancle"><a href="/listTable">Hủy</a></button>
                               </form>
                            </div>
                         </div>
@@ -108,8 +111,18 @@
       let topic = $('#topicID').val().trim();
       var content = CKEDITOR.instances['content'].getData();
       let name = $('#title').val().trim();
+      let _imageDemo = $('#avatar')[0].files[0];
 
-      console.log({ topic, content, name })
+      let formData = new FormData();
+
+      if(_imageDemo){
+         formData.append('avatar', _imageDemo);
+      }
+      formData.append('topic', topic);
+      formData.append('content', content);
+      formData.append('name', name);
+
+      console.log({ topic, content, name, _imageDemo })
       if(!topic || !content || !name){
          toastr.warning('Bạn cần phải nhập thêm nội dung','Nhập Thêm')
       }
@@ -118,14 +131,17 @@
       $.ajax({
          url: '/posts/add-post',
          method: 'POST',
-         data: {name, content, topic},
+         enctype: 'multipart/form-data',
+         data: formData,
+         processData: false,
+         contentType: false,
          success: resp => {
             console.log({ resp })
             //console.log(resp.error);
             
             if(!resp.error){
             toastr.success('Thêm Thành Công','Thành Công')
-            window.location.href="/listpost"
+            window.location.href="/listTable"
             } else {
             toastr.error('Thêm Không Thành Công','Thất Bại')
             // alert("Đăng Nhập Không Thành Công")

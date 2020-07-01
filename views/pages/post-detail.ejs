@@ -9,6 +9,10 @@
         margin-left: 65px;
         margin-top: 0px;
     }
+    #btnDeleteComment{
+        margin-left:65px;
+    }
+   
     
 </style>
 <%- include('../partials/header.ejs') %>
@@ -22,17 +26,17 @@
                                 <h2><%=infoPost.name%></h2>
                                 <p><%-infoPost.content%></p>
                                 <div class="meta">
-                                    <span class="author">By <a href=""></a></span>
+                                    <span class="author">Viết bơi : Tác Giả <%= infoPost.author %>  <a href=""></a></span>
                                 </div>
                                  <div class="helpful like-post-action">
-                                     <%console.log(infoUser)%>
-                                 <% if (infoPost.like.includes(infoUser._id)) {%>
-                                    <a class="like like-post" id="un-like-post" _postID ="<%=infoPost._id%>" href="#">Bỏ thích bài viết này </a>
-                                    <%}else{%>
-                                    <a class="like like-post" id="like-post" _postID ="<%=infoPost._id%>" href="#">Thích bài viết này </a>
-                                    <%}%>
-                                    <p >Lượt like: <span id="totalLike"><%= infoPost.like.length %></span> </p>
-                                   
+                                 <% if(infoUser) {%>
+                                    <% if (infoPost.like.includes(infoUser._id)) {%>
+                                        <a class="like like-post" id="un-like-post" _postID ="<%=infoPost._id%>" href="#">Bỏ thích bài viết này </a>
+                                        <%}else{%>
+                                        <a class="like like-post" id="like-post" _postID ="<%=infoPost._id%>" href="#">Thích bài viết này </a>
+                                        <%}%>
+                                        <p >Lượt like: <span id="totalLike"><%= infoPost.like.length %></span> </p>
+                                <%}%>
                                 </div>
                             </div><!-- /.head-post -->
                             <div class="body-post">
@@ -66,43 +70,45 @@
                                     <div class="comment-post">
                                         <div class="comments-list">
                                             <h4 class="title">Bình Luận</h4>
-                                            <ul>
+                                            <ul class="ul-comment">
                                                 <li>
-                                                <% if( infoPost.comments && infoPost.comments.length ){%>
-                                                    <%infoPost.comments.forEach( item => {%>
+                                                <% if( listComment && listComment.length ){%>
+                                                    <%listComment.forEach(item => {%>
+                                                        <% if (item.post._id.toString() == infoPost._id.toString()) { %>
                                                         <article class="comment">
-                                                        <!-- <div class="comment-order">1</div> -->
-                                                        <!-- <div class="avatar">
-                                                            <img src="images/user.jpg" alt="image">
-                                                        </div> -->
-                                                        <div class="comment-text">
-                                                            <img src="../images/thumbs/fa1.jpg" alt="">&nbsp;&nbsp;
-                                                            <span class="comment-body">Đây là bình luận của Duy</span>
-                                                            <div class="comment-head">
-                                                            <div class="date"><%=moment(item.createAt).startOf('hour').fromNow();%></div>
-                                                            </div>
-                                                        </div>   
-
-                                                    </article><!-- /.comment -->
+                                                            <div class="comment-text">
+                                                                <img style="max-width:40px; max-height:40px" src="../images/news/<%= item.author.avatar %>"  alt=""> &nbsp;&nbsp;
+                                                                <span ><%= item.author.fullname %></span>
+                                                                <p style="margin-left: 70px;" class="comment-body"><%= item.content %> </p style="margin-left: 30px;">
+                                                                <div class="comment-head">
+                                                                    <div class="date"><%=moment(item.createAt).startOf('hour').fromNow();%></div>
+                                                                </div>
+                                                                <% if (item.author._id.toString() == infoUser._id.toString()) { %>
+                                                                    <a id="btnDeleteComment" _postID="<%=item.post._id%>" _commentID="<%=item._id%>" href="">Xóa</a>
+                                                                <% } %>
+                                                                <br>
+                                                            </div>   
+                                                        </article><!-- /.comment -->
+                                                        <% } %>
                                                     <%})%>
-                                                    
                                                 <%} %>
-                                                    
                                                 </li>
-                                                <div class="author"><%= listUser.fullname %></div>
-                                                
-                                            </ul>                                  
+                                            </ul>              
                                         </div><!-- /.comments-list -->
+                                        <% if (infoUser) { %>
                                         <div id="respond" class="comment-respond">
                                             <form class="comment-form" id="comment-form" method="post" action="#">
-                                                <div class="message-comment">
-                                                    <textarea tabindex="4" placeholder="Nhập bình luận..." name="comment" id="comment" required=""></textarea>
+                                                <div id ="fullname-author"  _fullname="<%=infoUser.fullname%>" class="message-comment">
+                                                    <textarea  tabindex="4" placeholder="<%=infoUser.fullname%> nhập bình luận..." name="input-comment" id="input-comment" required=""></textarea>
                                                 </div>
                                                 <div class="submit-comment">
-                                                    <button type="submit" class="send-btn btnSend">Gửi</button>
+                                                    <button type="submit" class="btn btn-primary btnAddComment" _userID="<%= infoUser._id %>" _avatar="<%= infoUser.avatar %>"  _postID ="<%=infoPost._id%>">Gửi</button>
                                                 </div>
                                             </form><!-- /.comment-form -->
                                         </div><!-- /#respond -->
+                                        <% } else { %>
+                                            <p>Bạn Phải Đăng Nhập Để Bình Luận</p> <br>
+                                        <% } %>
                                     </div><!-- /.comment-post -->
                                     <div class="relate-posts">
                                         <div class="section-title">
@@ -112,12 +118,13 @@
                                             <article class="item-news full-thumb">
                                                 <div class="post thumb-art">
                                                     <% if(listPost && listPost.length){ %>
-                                                        <% for( let index = 1; index < 6; index++ ) { %>
-                                                                <h3><a href="/posts/info-post?postID=<%=listPost[index]._id%>"><%=listPost[index].name%></a></h3>
+                                                        <% listPost.slice(1,8).forEach(element => { %>
+                                                         
+                                                                <h3><a href="/posts/info-post?postID=<%=element._id%>"><%=element.name%></a></h3>
                                                                 <span>
-                                                                    <%-listPost[index].content.substring(0,73)%>
+                                                                    <%-element.content.substring(0,20)%>
                                                                 </span>
-                                                        <% } %>
+                                                        <% }) %>
                                                     <% }%>
                                                 </div>
                                             </article>
@@ -125,12 +132,12 @@
                                     </div><!-- /.relate-posts -->
                                     <div class="recommend-posts">
                                         <div class="section-title">
-                                            <h4><a href="#">Recommended for You</a></h4>
+                                            <h4><a href="#">Đề Xuất Cho Bạn</a></h4>
                                         </div>
                                         <div class="post-wrap">
                                             <article class="post">
                                                 <div class="thumb">
-                                                    <a href="#"><img src="images/thumbs/7.jpg" alt="img"></a>
+                                                    <a href="#"><img src="/images/thumbs/7.jpg" alt="img"></a>
                                                 </div>
                                                 <div class="cat">
                                                     <a href="">Social media</a>
@@ -142,7 +149,7 @@
                                             </article><!-- /.post -->
                                             <article class="post margin-b0 last">
                                                 <div class="thumb">
-                                                    <a href="#"><img src="images/thumbs/7.jpg" alt="img"></a>
+                                                    <a href="#"><img src="/images/thumbs/7.jpg" alt="img"></a>
                                                 </div>
                                                 <div class="cat">
                                                     <a href="">Social media</a>
@@ -169,7 +176,7 @@
     // $(document).on('click', '#btnComment', function(e) {
 	// 	e.preventDefault();
         
-    //     let examID = $(this).attr('_examID');
+    //     let postID = $(this).attr('_postID');
     //     let content = $('#inputComment').val();
     //     let author = $('#commentname').val();
         
@@ -243,6 +250,77 @@
                     return toastr['success']('Đã bỏ thích bài viết', 'Thông báo');
                 }else{
                     return toastr['error']('Thất bại', 'Thông báo');
+                }
+            },
+            error: err => console.log({ err })
+        });
+    })
+
+    //Thêm bình luận
+    $(document).on('click', '.btnAddComment', function(e) {
+		e.preventDefault();
+        let postID = $(this).attr("_postID");
+        let userID = $(this).attr("_userID");
+        let content = $('#input-comment').val();
+        let fullname = $('#fullname-author').attr('_fullname');
+        let _avatar = $(this).attr("_avatar");
+        console.log({ fullname, content, userID, _avatar })
+
+        if(!content){
+         toastr.warning('Bạn cần phải nhập thêm nội dung','Nhập Thêm')
+        }
+        else{
+            $.ajax({
+                url: `/comments/add-comment?postID=${postID}&content=${content}`,
+                 method: 'GET',
+                    success: resp => {
+                        let infoComment = resp;
+                        if(!resp.error){
+                            $('.comments-list').append(`
+                            <ul>
+                                <li>
+                                        <article class="comment">
+                                        <div class="comment-text">
+                                            <img style="max-width:40px; max-height:40px" src="../images/news/${_avatar}" alt="">&nbsp;&nbsp;
+                                            <span>${fullname}</span>
+                                            <p style="margin-left: 70px;" class="comment-body">${content} </p>
+                                            <div class="comment-head">
+                                                <div class="date">Vừa xong</div>
+                                            </div>
+                                            <a id="btnDeleteComment" _postID="${postID}" _commentID="${infoComment.infoComment.data._id}" href="">Xóa</a>
+                                            <br>
+                                        </div>   
+                                    </article><!-- /.comment -->
+                                </li>
+                            </ul>
+                            `)
+                            $('#input-comment').val('')
+                            return toastr['success']('OK', 'Thông báo');
+                        }else{
+                            return toastr['warning']('Bạn phải đăng nhập mới được bình luận', 'Thông báo');
+                        }
+                    },
+                    error: err => console.log({ err })
+                });
+                    
+            }
+           
+        })
+
+        $(document).on('click', '#btnDeleteComment', function(e) {
+		e.preventDefault();
+        let commentID = $(this).attr('_commentID');
+        let postID = $(this).attr('_postID');
+        $.ajax({
+            url: `/comments/remove-comment?commentID=${commentID}&postID=${postID}`,
+            method: 'get',
+            success: resp => {
+                console.log({ resp })
+                if(!resp.error){
+                    $(this).closest('.comment').empty();
+                    return toastr['success']('Xóa thành công', 'Thông báo');
+                }else{
+                    return toastr['error']('Xóa thất bại', 'Thông báo');
                 }
             },
             error: err => console.log({ err })

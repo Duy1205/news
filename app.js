@@ -5,6 +5,7 @@ let app             = express();
 let moment          = require('moment');
 let expressSession  = require('express-session');
 let cookieParser    = require('cookie-parser');
+let ROLE_ADMIN       = require('./utils/checkRole');
 
 //ROUTE
 const TOPIC_ROUTE = require('./routes/topic');
@@ -26,11 +27,9 @@ app.use(expressSession({
     saveUninitialized: true,
     resave: true,
     cookie: {
-        maxAge: 10 * 60 * 1000 * 10
+        maxAge: 10 * 60 * 1000 * 20
     }
 }))
-
-app.use(express.static('./public'));
 
 app.use('/topics', TOPIC_ROUTE);
 app.use('/posts', POST_ROUTE);
@@ -41,8 +40,16 @@ app.get('/', async (req, res) => {
     renderToView(req, res, 'pages/home', {});
 })
 
-app.get('/dashboard', (req, res) => {
+app.get('/dashboard2', ROLE_ADMIN, (req, res) => {
+    renderToView(req, res, 'pages/dashboard2', {});
+});
+
+app.get('/dashboard3', (req, res) => {
     renderToView(req, res, 'pages/dashboard', {});
+});
+
+app.get('/dashboard', (req, res) => {
+    renderToView(req, res, 'pages/logindb', {});
 });
 app.get('/add-post', (req, res) => {
     renderToView(req, res, 'pages/add-post', {});
@@ -59,6 +66,11 @@ app.get('/listpost', (req, res) => {
 app.get('/listtopic', (req, res) => {
     renderToView(req, res, 'pages/listtopic', {});
 });
+
+app.get('/listTable', (req, res) => {
+    renderToView(req, res, 'pages/listTable', {});
+});
+
 
 let uri     = 'mongodb://localhost:27017/webtintuc';
 const PORT  = process.env.PORT || 3000;

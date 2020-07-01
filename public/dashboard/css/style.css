@@ -301,7 +301,7 @@ body.sidebar-main .iq-sidebar .iq-sidebar-menu .iq-menu li ul.iq-submenu-data li
 /*---------------------------------------------------------------------
                              Top Menu
 -----------------------------------------------------------------------*/
-.iq-top-navbar { padding: 0 15px; min-height: 73px; line-height: 73px; position: fixed; top: 0; left: auto; right: 0; width: 100%; display: inline-block; z-index: 9999; background: black; margin: 0; transition: all 0.45s ease 0s; box-shadow: 0px 0px 20px 0px rgba(44, 101, 144, 0.1); }
+.iq-top-navbar { padding: 0 15px; min-height: 73px; line-height: 73px; position: fixed; top: 0; left: auto; right: 0; width: 100%; display: inline-block; z-index: 9999;  margin: 0; transition: all 0.45s ease 0s; box-shadow: 0px 0px 20px 0px rgba(44, 101, 144, 0.1); }
 .iq-top-navbar .navbar-expand-lg { justify-content: space-between !important; }
 .iq-top-navbar .navbar-collapse { flex-grow: unset; }
 .iq-top-navbar.fixed-header { margin: 0; right: 0; width: calc(100% - 260px); border-radius: 0; transition: all 0.45s ease 0s; }
@@ -316,7 +316,7 @@ body.sidebar-main .iq-sidebar .iq-sidebar-menu .iq-menu li ul.iq-submenu-data li
 .navbar-list li > .dropdown .dropdown-menu { -webkit-animation: fade-in-bottom 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both; animation: fade-in-bottom 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both; -webkit-transform: translateY(100%); transform: translateY(100%); }
 .navbar-list li .dropdown-toggle::after { display: none; }
 .navbar-list li>a.language-title { font-size: 16px; }
-.navbar-list li>a { font-size: 18px; padding: 0 15px; line-height: 73px; color: var(--iq-primary); display: block; min-height: 75px; }
+.navbar-list li>a { font-size: 18px; padding: 0 15px; line-height: 73px; color: white; display: block; min-height: 75px; }
 .navbar-list li:last-child>a { padding-right: 20px; }
 .menu-tag { position: absolute; background: var(--iq-body-text); color: var(--iq-white); display: inline-block; top: 18px; left: 18px; font-size: 12px; border-radius: 90px; line-height: normal; height: 18px; width: 18px; line-height: 18px; text-align: center; display: inline-block; }
 .navbar-list li a:hover { text-decoration: none; }
@@ -348,7 +348,7 @@ div#lottie-beil svg path, div#lottie-mail svg path, div#lottie-fullscreen svg pa
 .iq-search-bar .search-input { width: 100%; height: 40px; padding: 5px 40px 5px 15px; border-radius: 10px; border: none; background: var(--iq-light-primary); }
 .iq-navbar-logo { padding: 0; width: auto; position: relative; background: var(--iq-white); -webkit-transition: all 0.3s ease-out 0s; -moz-transition: all 0.3s ease-out 0s; -ms-transition: all 0.3s ease-out 0s; -o-transition: all 0.3s ease-out 0s; transition: all 0.3s ease-out 0s; background: transparent; }
 .iq-navbar-logo a { display: flex; align-items: flex-start; }
-.iq-navbar-logo a span { margin-left: 10px; font-size: 28px;font-family: 'Poppins', sans-serif; line-height: 45px; color: var(--iq-title-text); flex: 1; -webkit-transition: all 0.3s ease-out 0s; -moz-transition: all 0.3s ease-out 0s; -ms-transition: all 0.3s ease-out 0s; -o-transition: all 0.3s ease-out 0s; transition: all 0.3s ease-out 0s; }
+.iq-navbar-logo a span { margin-left: 10px; font-size: 28px;font-family: 'Poppins', sans-serif; line-height: 45px; color: white; flex: 1; -webkit-transition: all 0.3s ease-out 0s; -moz-transition: all 0.3s ease-out 0s; -ms-transition: all 0.3s ease-out 0s; -o-transition: all 0.3s ease-out 0s; transition: all 0.3s ease-out 0s; }
 .iq-navbar-logo a:hover, .iq-navbar-logo a:focus { text-decoration: none; }
 .iq-navbar-logo img { height: 45px; }
 

@@ -1,0 +1,96 @@
+<%- include ('../partials3/sidebar') %>
+<%- include ('../partials3/header') %>
+<div class="content">
+   <div class="row">
+     <div class="col-md-8">
+       <div class="card">
+         <div class="card-header">
+           <h5 class="title">Thông Tin Admin</h5>
+         </div>
+         <div class="card-body">
+           <form>
+             <div class="row">
+               <div class="col-md-6 pr-md-1">
+                 <div class="form-group">
+                   <label>Tên Đầy Đủ</label>
+                   <input type="text" class="form-control" readonly  placeholder="Company" id="name"  name="name" value="<%= infoUser.fullname%>">
+                 </div>
+               </div>
+               <div class="col-md-6 pl-md-1">
+                 <div class="form-group">
+                   <label for="exampleInputEmail1">Địa Chỉ Email</label>
+                   <input type="email" readonly class="form-control" id="email" value="<%= infoUser.email%>" placeholder="<%= infoUser.email%>">
+                 </div>
+               </div>
+             </div>
+             <div class="row">
+               <div class="col-md-6 pr-md-1">
+                 <div class="form-group">
+                   <label>Tên</label>
+                   <input type="text" class="form-control" readonly placeholder="Company" value="<%= infoUser.fullname.substring(6,12)%>">
+                 </div>
+               </div>
+               <div class="col-md-6 pl-md-1">
+                 <div class="form-group">
+                   <label>Họ</label>
+                   <input type="text" class="form-control" readonly placeholder="Last Name" value="<%= infoUser.fullname.substring(0,5)%>">
+                 </div>
+               </div>
+             </div>
+             <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Địa Chỉ</label>
+                  <input type="text" class="form-control" readonly placeholder="Home Address" value="447/27/12 Đống Đa, P.25, Quận Bình Thạnh">
+                </div>
+              </div>
+            </div>
+           </form>
+         </div>
+         <div class="card-footer">
+          <a href="/users/edit-admin2/<%= infoUser._id %> "><button type="submit" _userID=<%= infoUser._id%> class="btn btn-fill btn-primary btnSave">Chỉnh Sửa</button></a>
+         </div>
+       </div>
+     </div>
+     <div class="col-md-4">
+       <div class="card card-user">
+         <div class="card-body">
+           <p class="card-text">
+             <div class="author">
+               <div class="block block-one"></div>
+               <div class="block block-two"></div>
+               <div class="block block-three"></div>
+               <div class="block block-four"></div>
+               <a href="javascript:void(0)">
+                <div class="form-group">
+                  <img style="max-width : 75px ; max-height : 75px" src="/images/news/<%= infoUser.avatar%>" alt="avatar"> <br>
+                </div>
+                 <h5 class="title"><%= infoUser.fullname%></h5>
+               </a>
+               <p class="description">
+                 Ceo/Co-Founder <hr> -Dexpress-
+               </p>
+             </div>
+           </p>
+           <div class="card-description">
+             Do not be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+           </div>
+         </div>
+         <div class="card-footer">
+           <div class="button-container">
+             <button href="https://www.facebook.com/duydeptrai120599/" class="btn btn-icon btn-round btn-facebook">
+               <i class="fab fa-facebook"></i>
+             </button>
+             <button href="javascript:void(0)" class="btn btn-icon btn-round btn-twitter">
+               <i class="fab fa-twitter"></i>
+             </button>
+             <button href="javascript:void(0)" class="btn btn-icon btn-round btn-google">
+               <i class="fab fa-google-plus"></i>
+             </button>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+<%- include ('../partials3/footer') %>

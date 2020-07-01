@@ -28,7 +28,7 @@
                                     <input type="text" class="form-control" id="name"  name="name" value="<%= infoTopic.name%>">
                                  </div>
                                  <button type="submit" _topicID=<%= infoTopic._id%> class="btn btn-primary btnSave">Lưu lại</button>
-                                 <button type="reset" class="btn iq-bg-danger btnCancle"><a href="/listtopic">Hủy</a></button>
+                                 <button type="reset" class="btn iq-bg-danger btnCancle"><a href="/listTable">Hủy</a></button>
                               </form>
                            </div>
                         </div>
@@ -61,7 +61,7 @@
             
             if(!resp.error){
             toastr.success('Thêm Thành Công','Thành Công')
-            window.location.href= "/listtopic";
+            window.location.href= "/listTable";
             // window.location.href="/dashboard"
             } else {
             toastr.error('Thêm Không Thành Công','Thất Bại')

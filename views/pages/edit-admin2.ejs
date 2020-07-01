@@ -1,0 +1,120 @@
+<%- include ('../partials3/sidebar') %>
+<%- include ('../partials3/header') %>
+<div class="content">
+   <div class="row">
+     <div class="col-md-8">
+       <div class="card">
+         <div class="card-header">
+           <h5 class="title">Thông Tin Admin</h5>
+         </div>
+         <div class="card-body">
+           <form>
+             <div class="row">
+               <div class="col-md-6 pr-md-1">
+                 <div class="form-group">
+                   <label>Tên Đầy Đủ</label>
+                   <input type="text" class="form-control"  placeholder="Company" id="name"  name="name" value="<%= infoUser.fullname%>">
+                 </div>
+               </div>
+               <div class="col-md-6 pl-md-1">
+                 <div class="form-group">
+                   <label for="exampleInputEmail1">Địa Chỉ Email</label>
+                   <input type="email" readonly class="form-control" id="email" value="<%= infoUser.email%>" placeholder="<%= infoUser.email%>">
+                 </div>
+               </div>
+             </div>
+             <div class="row">
+               <div class="col-md-6 pr-md-1">
+                 <div class="form-group">
+                   <label>Tên</label>
+                   <input type="text" class="form-control" readonly placeholder="Company" value="<%= infoUser.fullname.substring(6,12)%>">
+                 </div>
+               </div>
+               <div class="col-md-6 pl-md-1">
+                 <div class="form-group">
+                   <label>Họ</label>
+                   <input type="text" class="form-control" readonly placeholder="Last Name" value="<%= infoUser.fullname.substring(0,5)%>">
+                 </div>
+               </div>
+             </div>
+             <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Địa Chỉ</label>
+                  <input type="text" class="form-control" readonly placeholder="Home Address" value="447/27/12 Đống Đa, P.25, Quận Bình Thạnh">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="exampleFormControlFile1">Ảnh Đại Diện</label>&nbsp;&nbsp;&nbsp; <br>
+                  <img style="max-width : 75px ; max-height : 75px" src="/images/news/<%= infoUser.avatar%>" alt="avatar">
+                </div>
+              </div>
+            </div>
+           </form>
+         </div>
+         <div class="card-footer">
+           <button type="submit" _userID=<%= infoUser._id%> class="btn btn-fill btn-primary btnSave">Lưu Lại</button>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+<%- include ('../partials3/footer') %>
+
+<script>
+   
+  CKEDITOR.replace( 'content' );
+
+  $(document).on('click', '.btnSave', function(e){
+     e.preventDefault();
+     let topic = $('#topicID').val().trim();
+     var content = CKEDITOR.instances['content'].getData();
+     let name = $('#title').val().trim();
+     let _imageDemo = $('#avatar')[0].files[0];
+
+     let formData = new FormData();
+
+     if(_imageDemo){
+        formData.append('avatar', _imageDemo);
+     }
+     formData.append('topic', topic);
+     formData.append('content', content);
+     formData.append('name', name);
+
+     console.log({ topic, content, name, _imageDemo })
+     if(!topic || !content || !name){
+        toastr.warning('Bạn cần phải nhập thêm nội dung','Nhập Thêm')
+     }
+     else{
+
+     $.ajax({
+        url: '/posts/add-post',
+        method: 'POST',
+        enctype: 'multipart/form-data',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: resp => {
+           console.log({ resp })
+           //console.log(resp.error);
+           
+           if(!resp.error){
+           toastr.success('Thêm Thành Công','Thành Công')
+           window.location.href="/listTable"
+           } else {
+           toastr.error('Thêm Không Thành Công','Thất Bại')
+           // alert("Đăng Nhập Không Thành Công")
+           }
+        },
+        error: err => {
+           console.log(err)
+        }
+     })
+  }
+
+  });
+
+</script>

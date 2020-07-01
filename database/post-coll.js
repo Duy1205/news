@@ -8,7 +8,7 @@ var postSchema = new Schema({
     },
     name: String,
     content: String,
-    file: String,
+    avatar: String,
     seen: [{
         type: Schema.Types.ObjectId,
         ref: "user",

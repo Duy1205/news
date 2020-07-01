@@ -6,7 +6,7 @@ const USER_COLL = require('../database/user-coll');
 
 module.exports = class Post extends POST_COLL {
 
-    static insert({ name, content, topic, author}) {
+    static insert({ name, content, topic, author, avatar}) {
         return new Promise(async resolve => {
             try {
 
@@ -17,7 +17,8 @@ module.exports = class Post extends POST_COLL {
                     name,
                     content,
                     topic,
-                    author
+                    author,
+                    avatar
                 };
                 
 
@@ -59,6 +60,7 @@ module.exports = class Post extends POST_COLL {
                 .populate('topic')
                 .populate('user')
                 .sort({ createAt: -1 })
+                .sort({seen : -1})
 
                 // console.log(listPost);
                 
@@ -94,7 +96,7 @@ module.exports = class Post extends POST_COLL {
                 .populate('topic')
                 .populate('user')
                 .limit(5)
-                // .sort({seen: 1})
+                .sort({seen: -1})
                 // console.log({listPostTop5})
                 
                 if (!listPostTop5) return resolve({ error: true, message: 'cannot_get_list_data' });
@@ -104,6 +106,36 @@ module.exports = class Post extends POST_COLL {
             } catch (error) {
 
                 return resolve({ error: true, message: error.message });
+            }
+        })
+    }
+
+
+    static listTopView(){
+        return new Promise(async resolve => {
+            try {
+                let listTopView = await POST_COLL.find({})
+                .sort({seen : -1})
+
+                if(!listTopView) return resolve({ error : true, message : 'cannot_get_data'});
+
+                return resolve({ error : false, data : listTopView})
+            } catch (error) {
+                return resolve({ error : true, message : error.message});
+            }
+        })
+    }
+
+    static listSpecialPost(){
+        return new Promise(async resolve => {
+            try {
+                let listSpecialPost = await POST_COLL.find({})
+                .sort({like : -1})
+
+                if(!listSpecialPost) return resolve({error : true, message : 'cannot)get_data'})
+                return resolve({error : false, data : listSpecialPost})
+            } catch (error) {
+                return resolve({error : true, message : error.message});
             }
         })
     }
@@ -119,6 +151,7 @@ module.exports = class Post extends POST_COLL {
                 .populate('comments')
                 .populate('topic')
                 .populate('author')
+                .sort({createAt : -1})
 
                 if (!infoPost) return resolve({ error: true, message: 'cannot_get_info_data' });
 
@@ -173,7 +206,7 @@ module.exports = class Post extends POST_COLL {
         })
     }
 
-    static update({ postID,topic, name, content }) {
+    static update({ postID,topic, name, content}) {
         return new Promise(async resolve => {
             try {
 
@@ -185,6 +218,7 @@ module.exports = class Post extends POST_COLL {
                     topic,
                     name,
                     content
+                    
                     // file,
                     // userUpdate, 
                     // modifyAt: Date.now()

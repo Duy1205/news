@@ -1,0 +1,113 @@
+<%- include ('../partials2/sidebar') %>
+<%- include ('../partials2/header') %>
+         <style>
+         .inputfile {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+         }
+         .avatar img{
+            width: 100px;
+            height: auto;
+            border-radius: 50%;
+         }
+         </style>
+         <div id="content-page" class="content-page">
+            <div class="container">
+               <div class="row">
+                  <div class="col-lg-12">
+                     <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                           <div class="iq-header-title">
+                              <h4 style="font-family: utm-avo">Thông Tin Cá Nhân</h4>
+                           </div>
+                        </div>
+                        <div class="iq-card-body">
+                           <div class="acc-edit">
+                              <form>
+                                 <div class="form-group">
+                                    <label for="uname">Tên Đầy Đủ</label>
+                                    <input type="text" readonly class="form-control" id="name"  name="name" value="<%= infoUser.fullname%>">
+                                 </div>
+                                 <form>
+                                    <div class="form-group avatar">
+                                      <label for="exampleFormControlFile1">Ảnh Đại Diện</label>&nbsp;&nbsp;&nbsp;
+                                      <img style="max-width : 75px ; max-height : 75px" src="/images/news/<%= infoUser.avatar%>" alt="avatar">
+                                    </div>
+                                  </form>
+                                 <div class="form-group">
+                                    <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+                                    <div class="form-group">
+                                      <input type="text" readonly class="form-control" id="email" value="<%= infoUser.email%>">
+                                    </div>
+                                  </div>
+                                 </div>
+                                 <button type="reset" class="btn iq-bg-danger btnCancle"><a href="/">Thoát</a></button>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+<%- include ('../partials2/footer') %>
+
+<script>
+   
+   $(document).on('click', '.btnSave', function(e){
+      e.preventDefault();
+      let userID = $(this).attr('_userID');
+      let fullname = $('#name').val().trim();
+      // let password = $('#password').val().trim();
+      let _imageDemo = $('#avatar')[0].files[0];
+
+      let formData = new FormData();
+
+      if(_imageDemo){
+         formData.append('avatar', _imageDemo);
+      }
+      formData.append('fullname', fullname);
+      // formData.append('password', password);
+
+      console.log({ fullname, _imageDemo })
+      if(!fullname){
+         toastr.warning('Bạn cần phải nhập thêm nội dung','Nhập Thêm')
+      }
+      else{
+
+
+      $.ajax({
+         url: `/users/update-user/${userID}`,
+         method: 'POST',
+         enctype: 'multipart/form-data',
+         data: formData,
+         processData: false,
+         contentType: false,
+         success: resp => {
+            console.log({ resp })
+            //console.log(resp.error);
+            
+            if(!resp.error){
+            toastr.success('Bạn Phải Đăng Nhập Lại','Đăng Xuất')
+            window.location.href= "/users/dang-nhap";
+            // window.location.href="/dashboard"
+            } else {
+            toastr.error('Sửa Không Thành Công','Thất Bại')
+            // alert("Đăng Nhập Không Thành Công")
+            }
+         },
+         error: err => {
+            console.log(err)
+         }
+      })
+   }
+
+   });
+
+</script>
+        

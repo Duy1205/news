@@ -7,6 +7,7 @@ const { renderToView } = require('../utils/childRouting');
 const fs = require('fs');
 
 const jwt = require('../utils/jwt');
+const { uploadMulter } = require('../utils/config-multer');
 
 let ObjectID = require('mongoose').Types.ObjectId;
 
@@ -19,7 +20,11 @@ route.get('/dang-ky', async (req, res) => {
 })
 
 route.get('/dang-nhap', async (req, res) => {
-    res.render('pages/login');
+    renderToView(req, res,'pages/login', { });
+})
+
+route.get('/dang-nhap-admin', (req, res) => {
+    renderToView( req, res, 'pages/logindb', { });
 })
 
 route.get('/edit-user/:userID', async (req, res) => {
@@ -30,6 +35,40 @@ route.get('/edit-user/:userID', async (req, res) => {
     // console.log({infoTopic});
     
     renderToView(req, res, 'pages/edit-user', {infoUser : infoUser.data});
+});
+
+route.get('/info-user2/:userID', async (req, res) => {
+
+    let {userID} = req.params;
+    
+    let infoUser = await USER_MODEL.getInfo({ userID });
+    // console.log({infoTopic});
+    
+    renderToView(req, res, 'pages/info-user2', {infoUser : infoUser.data});
+});
+
+route.get('/edit-admin/:userID', async (req, res) => {
+
+    let {userID} = req.params;
+    
+    let infoUser = await USER_MODEL.getInfo({ userID });
+    // console.log({infoTopic});
+    
+    renderToView(req, res, 'pages/edit-admin', {infoUser : infoUser.data});
+});
+
+route.get('/edit-admin2/:userID', async (req, res) => {
+
+    let {userID} = req.params;
+    
+    let infoUser = await USER_MODEL.getInfo({ userID });
+    // console.log({infoTopic});
+    
+    renderToView(req, res, 'pages/edit-admin2', {infoUser : infoUser.data});
+});
+
+route.get('/listTable', (req, res) => {
+    renderToView(req, res, 'pages/listTable', {});
 });
 
 route.get('/edit-password/:userID', async (req, res) => {
@@ -46,7 +85,7 @@ route.post('/login', async (req, res) => {
     let { email, password } = req.body;
 
     let infoUser = await USER_MODEL.signIn(email, password);
-    console.log({infoUser});
+    // console.log({infoUser});
     
     if(infoUser.error){
         return res.json(infoUser);
@@ -74,6 +113,16 @@ route.get('/listUser', async (req, res) => {
     
 })
 
+route.get('/listTable', async (req, res) => {
+    
+    let listUser = await USER_MODEL.getList();
+    console.log(listUser);
+    
+    res.json({listUser});
+    
+    
+})
+
 route.post('/add-user', async (req, res) => {
     let {email, fullname, password, avatar} = req.body;
     console.log({email, fullname, password, avatar});
@@ -86,10 +135,13 @@ route.post('/add-user', async (req, res) => {
 
 route.get('/infoUser', async (req, res) => {
     
-    let infoUser = await USER_MODEL.getInfo();
-    console.log(infoUser);
+    let {userID} = req.query;
+
+    console.log(userID);
     
-    res.json({infoUser});
+    let infoUser = await USER_MODEL.getInfo({userID})
+    res.json(infoUser)
+    
     
 })
 
@@ -117,15 +169,18 @@ route.post('/register', async (req, res) => {
     // res.json({infoUser});
 });
 
-route.post('/update-user/:userID', async (req, res) => {
+route.post('/update-user/:userID',uploadMulter.single('avatar') ,async (req, res) => {
     let {userID} = req.params;
     //console.log({topicID});
     
-    let { fullname, password, avatar} = req.body;
-    console.log({fullname, password, avatar});
+    let { fullname} = req.body;
+    let infoFile = req.file;
+
+
+    // console.log({fullname,infoFile });
     
-    let infoUser = await USER_MODEL.update({userID, fullname, password});
-    console.log(infoUser);
+    let infoUser = await USER_MODEL.update({userID, fullname, avatar: infoFile.originalname});
+    // console.log(infoUser);
     
     res.json({infoUser});
 })

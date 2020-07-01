@@ -11,70 +11,58 @@
 						</div>
                         <article class="post">
                             <% if(infoTopic.posts && infoTopic.posts.length){ %>
-                                <% for( let index = infoTopic.posts.length - 1; index > infoTopic.posts.length - 2; index-- ) { %>
+                                <%infoTopic.posts.slice(0,1).forEach(item => {%>
                                     <div class="thumb">
-                                        <a href="#"><img src="../images/thumbs/fa3.jpg" alt="img"></a>
+                                        <a href="/posts/info-post?postID=<%= item._id%>"><img style="max-width : 300px ; max-height: 300px; " src="/images/news/<%=item.avatar %>" width="300px" height="300px" alt=""></a>
                                     </div>
                                     <div class="cat">
                                         <a href><%=infoTopic.name%></a>
                                     </div>
-                                        <h3><a href="/posts/info-post?postID=<%=infoTopic.posts[index]._id%>"><%=infoTopic.posts[index].name%></a></h3>
-                                    <div class="activity">
-                                        <span class="views"><%= infoTopic.posts[index].seen.length %></span>
-                                        <span class="comment"><a href="#"><%= infoTopic.posts[index].comments.length %></a></span>
-                                    </div>
-                                <% } %>
+                                        <h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+										<p class=""><%-item.content.substring(0,70)%>...<span><a href="/posts/info-post?postID=<%= item._id%>">Xem thêm</a></span></p>
+                                    <% }) %>
                             <% }%>
 						</article><!--  /.post -->
 						<article class="post last">
                             <% if(infoTopic.posts && infoTopic.posts.length){ %>
-                                <% for( let index = infoTopic.posts.length - 2; index > infoTopic.posts.length - 3; index-- ) { %>
+                                <%infoTopic.posts.slice(1,2).forEach(item => {%>
                                     <div class="thumb">
-                                        <a href="#"><img src="../images/thumbs/fa2.jpg" alt="img"></a>
+                                        <a href="/posts/info-post?postID=<%= item._id%>"><img style="max-width : 300px ; max-height: 300px; " src="/images/news/<%=item.avatar %>"  width="300px" height="300px" alt=""></a>
                                     </div>
                                     <div class="cat">
                                         <a href><%=infoTopic.name%></a>
                                     </div>
-                                        <h3><a href="/posts/info-post?postID=<%=infoTopic.posts[index]._id%>"><%=infoTopic.posts[index].name%></a></h3>
-                                    <div class="activity">
-                                        <span class="views"><%= infoTopic.posts[index].seen.length %></span>
-                                        <span class="comment"><a href="#"><%= infoTopic.posts[index].comments.length %></a></span>
-                                    </div>
-                                <% } %>
+                                        <h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+										<p class=""><%-item.content.substring(0,70)%>...<span><a href="/posts/info-post?postID=<%= item._id%>">Xem thêm</a></span></p>
+                                <% }) %>
                             <% }%>
 						</article><!--  /.post -->
 						<article class="post">
                             <% if(infoTopic.posts && infoTopic.posts.length){ %>
-                                <% for( let index = infoTopic.posts.length - 3; index > infoTopic.posts.length - 4; index-- ) { %>
+                                <%infoTopic.posts.slice(2,3).forEach(item => {%>
                                     <div class="thumb">
-                                        <a href="#"><img src="../images/thumbs/fa1.jpg" alt="img"></a>
+                                        <a href="/posts/info-post?postID=<%= item._id%>"><img style="max-width : 300px ; max-height: 300px; " src="/images/news/<%=item.avatar %>"  width="300px" height="300px" alt=""></a>
                                     </div>
                                     <div class="cat">
                                         <a href><%=infoTopic.name%></a>
                                     </div>
-                                        <h3><a href="/posts/info-post?postID=<%=infoTopic.posts[index]._id%>"><%=infoTopic.posts[index].name%></a></h3>
-                                    <div class="activity">
-                                        <span class="views"><%= infoTopic.posts[index].seen.length %></span>
-                                        <span class="comment"><a href="#"><%= infoTopic.posts[index].comments.length %></a></span>
-                                    </div>
-                                <% } %>
+                                        <h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+										<p class=""><%-item.content.substring(0,70)%>...<span><a href="/posts/info-post?postID=<%= item._id%>">Xem thêm</a></span></p>
+                                <%  }) %>
                             <% }%>
 						</article><!--  /.post -->
 						<article class="post margin-b0 last">
                             <% if(infoTopic.posts && infoTopic.posts.length){ %>
-                                <% for( let index = infoTopic.posts.length - 4; index > infoTopic.posts.length - 5; index-- ) { %>
+                                <%infoTopic.posts.slice(3,4).forEach(item => {%>
                                     <div class="thumb">
-                                        <a href="#"><img src="../images/thumbs/fa4.jpg" alt="img"></a>
+                                        <a href="/posts/info-post?postID=<%= item._id%>"><img style="max-width : 300px ; max-height: 300px; " src="/images/news/<%=item.avatar %>"  width="300px" height="300px" alt=""></a>
                                     </div>
                                     <div class="cat">
                                         <a href><%=infoTopic.name%></a>
                                     </div>
-                                        <h3><a href="/posts/info-post?postID=<%=infoTopic.posts[index]._id%>"><%=infoTopic.posts[index].name%></a></h3>
-                                    <div class="activity">
-                                        <span class="views"><%= infoTopic.posts[index].seen.length %></span>
-                                        <span class="comment"><a href="#"><%= infoTopic.posts[index].comments.length %></a></span>
-                                    </div>
-                                <% } %>
+                                        <h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+										<p class=""><%-item.content.substring(0,70)%>...<span><a href="/posts/info-post?postID=<%= item._id%>">Xem thêm</a></span></p>
+                                <% }) %>
                             <% }%>
 						</article>
 					</div>
@@ -85,17 +73,16 @@
 							<h5 class="widget-title">Có thể bạn quan tâm</h5>
 							<ul>
                             <% if(infoTopic.posts && infoTopic.posts.length){ %>
-                                <% for( let index = infoTopic.posts.length - 5; index > infoTopic.posts.length - 10; index-- ) { %>
+                                <%infoTopic.posts.slice(4,10).forEach(item => {%>
                                     <li>
                                         <div class="thumb">
-                                            <a href="/posts/info-post?postID=<%=infoTopic.posts[index]._id%>"><img src="../images/thumbs/sad.jpg" alt="img"></a>
+                                            <a href="/posts/info-post?postID=<%= item._id%>"><img style="max-width : 80px ; max-height: 80px; " src="/images/news/<%=item.avatar %>" width="80px" height="80px" alt=""></a>
                                         </div>
                                         <div class="content">
-                                            <h3><a href="/posts/info-post?postID=<%=infoTopic.posts[index]._id%>"><%=infoTopic.posts[index].name%></a></h3>
-                                            <div class="date"><%=moment(infoTopic.posts[index].createAt).startOf('hour').fromNow();%></div>
+                                            <h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
                                         </div>
                                     </li>
-                                <% }%>
+                                <% })%>
                             <% }%>
 							</ul>
 						</div><!-- /.widget-recent -->

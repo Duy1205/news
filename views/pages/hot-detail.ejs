@@ -1,0 +1,95 @@
+<% moment.locale('vi')%>
+<%- include('../partials/header.ejs') %>
+    <section id="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="highlights-posts gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
+						<div class="gn-line"></div>
+						<div class="section-title">
+                            <h4><a href="#"><%=infoTopic.name%></h4>
+						</div>
+                        <article class="post">
+                            <% if(infoTopic.posts && infoTopic.posts.length){ %>
+                                <%infoTopic.posts.slice(0,1).forEach(item => {%>
+                                    <div class="thumb">
+                                        <a href="/posts/info-post?postID=<%= item._id%>"><img src="/images/news/<%=item.avatar %>" width="300px" height="300px	" alt="avatar"></a>
+                                    </div>
+                                    <div class="cat">
+                                        <a href><%=infoTopic.name%></a>
+                                    </div>
+                                        <h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+										<p class=""><%-item.content.substring(0,150)%>...<span><a href="/posts/info-post?postID=<%= item._id%>">Xem thêm</a></span></p>
+                                    <% }) %>
+                            <% }%>
+						</article><!--  /.post -->
+						<article class="post last">
+                            <% if(infoTopic.posts && infoTopic.posts.length){ %>
+                                <%infoTopic.posts.slice(1,2).forEach(item => {%>
+                                    <div class="thumb">
+                                        <a href="/posts/info-post?postID=<%= item._id%>"><img src="/images/news/<%=item.avatar %>" width="300px" height="300px	" alt="avatar"></a>
+                                    </div>
+                                    <div class="cat">
+                                        <a href><%=infoTopic.name%></a>
+                                    </div>
+                                        <h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+										<p class=""><%-item.content.substring(0,150)%>...<span><a href="/posts/info-post?postID=<%= item._id%>">Xem thêm</a></span></p>
+                                <% }) %>
+                            <% }%>
+						</article><!--  /.post -->
+						<article class="post">
+                            <% if(infoTopic.posts && infoTopic.posts.length){ %>
+                                <%infoTopic.posts.slice(2,3).forEach(item => {%>
+                                    <div class="thumb">
+                                        <a href="/posts/info-post?postID=<%= item._id%>"><img src="/images/news/<%=item.avatar %>" width="300px" height="300px	" alt="avatar"></a>
+                                    </div>
+                                    <div class="cat">
+                                        <a href><%=infoTopic.name%></a>
+                                    </div>
+                                        <h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+										<p class=""><%-item.content.substring(0,150)%>...<span><a href="/posts/info-post?postID=<%= item._id%>">Xem thêm</a></span></p>
+                                <%  }) %>
+                            <% }%>
+						</article><!--  /.post -->
+						<article class="post margin-b0 last">
+                            <% if(infoTopic.posts && infoTopic.posts.length){ %>
+                                <%infoTopic.posts.slice(3,4).forEach(item => {%>
+                                    <div class="thumb">
+                                        <a href="/posts/info-post?postID=<%= item._id%>"><img src="/images/news/<%=item.avatar %>" width="300px" height="300px	" alt="avatar"></a>
+                                    </div>
+                                    <div class="cat">
+                                        <a href><%=infoTopic.name%></a>
+                                    </div>
+                                        <h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+										<p class=""><%-item.content.substring(0,150)%>...<span><a href="/posts/info-post?postID=<%= item._id%>">Xem thêm</a></span></p>
+                                <% }) %>
+                            <% }%>
+						</article>
+					</div>
+                </div>
+                <div class="col-md-4">
+					<div class="sidebar-widget-1">
+						<div class="widget widget-recent gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
+							<h5 class="widget-title">Có thể bạn quan tâm</h5>
+							<ul>
+                            <% if(infoTopic.posts && infoTopic.posts.length){ %>
+                                <%infoTopic.posts.slice(4,10).forEach(item => {%>
+                                    <li>
+                                        <div class="thumb">
+                                            <a href="/posts/info-post?postID=<%= item._id%>"><img src="/images/news/<%=item.avatar %>" width="80px" height="80px" alt="avatar"></a>
+                                        </div>
+                                        <div class="content">
+                                            <h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
+                                            <div class="date"><%=moment(item.createAt).startOf('hour').fromNow();%></div>
+                                        </div>
+                                    </li>
+                                <% })%>
+                            <% }%>
+							</ul>
+						</div><!-- /.widget-recent -->
+					</div><!-- /.sidebar -->
+				</div>
+            </div>
+        </div>
+    </section>
+<%- include('../partials/footer.ejs') %>

@@ -22,6 +22,8 @@ let renderToView = async function(req, res, view, data) {
     let listTopic = await TOPIC_MODEL.getList();
     let listComment = await COMMENT_MODEL.getList();
     let listUser = await USER_MODEL.getList();
+    let listTopView = await POST_MODEL.listTopView();
+    let listSpecialPost = await POST_MODEL.listSpecialPost();
 ;
     data.moment = moment;
 
@@ -30,6 +32,8 @@ let renderToView = async function(req, res, view, data) {
     data.listPost = listPost.data;
     data.listComment = listComment.data;
     data.listUser = listUser.data;
+    data.listTopView = listTopView.data;
+    data.listSpecialPost = listSpecialPost.data;
 
     res.render(view, data);
 }

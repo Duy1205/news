@@ -21,6 +21,15 @@ route.get('/info-topic', async (req, res) => {
 
 })
 
+route.get('/info-topicdb', async (req, res) => {
+    let { topicID } = req.query;
+    let infoTopic = await TOPIC_MODEL.getInfo({ topicID })
+
+    renderToView(req, res, 'pages/topic-detail-db', { infoTopic: infoTopic.data})
+
+})
+
+
 route.get('/edit-topic/:topicID', async (req, res) => {
 
     let {topicID} = req.params;

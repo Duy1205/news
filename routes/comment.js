@@ -2,11 +2,10 @@ const route = require('express').Router();
 const  POST_MODEL  = require('../models/post');
 const COMMENT_MODEL = require('../models/comment');
 const USER_MODEL = require('../models/user');
+const jwt       = require('../utils/jwt');
 const checkActive       = require('../utils/checkActive');
 
 let ObjectID = require('mongoose').Types.ObjectId;
-
-
 
 // route.get('/listComment', async (req, res) => {
 //     let listComment = await COMMENT_MODEL.getList();
@@ -15,13 +14,18 @@ let ObjectID = require('mongoose').Types.ObjectId;
 //     res.json({listComment})
 // })
 
-route.post('/add-comment', checkActive, async (req, res) => {
-    let infoUser = req.session;
-    let {postID, content} = req.body;
-    let infoComment = await COMMENT_MODEL.insert({postID, content, author: infoUser.user.infoUser._id});
-    console.log(infoComment);
+route.get('/add-comment', checkActive, async (req, res) => {
+    let { token } = req.session;
+    let infoUser = await jwt.verify(token);
+
+    let { postID, content } = req.query;
+    
+
+    let infoComment = await COMMENT_MODEL.insert({ postID, content, author: infoUser.data._id });
+
+    // console.log(infoComment);
     res.json({infoComment});
-})
+}) 
 
 // route.get('/infoComment', async (req, res) => {
     
@@ -68,13 +72,9 @@ route.post('/update-comment', async (req, res) => {
     res.json({infoComment});
 })
 
-route.post('/remove-comment/:commentID',checkActive, async (req, res) => {
-    let {commentID, postID} = req.body;
-    //console.log({commentID});
-    
-    //let { name} = req.body;
-    //console.log({name});
-    
+route.get('/remove-comment', checkActive, async (req, res) => {
+    let {commentID, postID} = req.query;
+
     let infoCommentRemove = await COMMENT_MODEL.remove({commentID, postID});
     // console.log(infoComment);
     

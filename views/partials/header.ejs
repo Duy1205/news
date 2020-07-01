@@ -45,13 +45,22 @@
 	<![endif]-->
 </head>
 
+<style>
+
+.avatar img{
+            width: 100px;
+            height: auto;
+            border-radius: 50%;
+         }
+</style>
+
 <body>
    	<!-- Header -->
    	<header id="header" class="header">
 	   	<div class="top-wrap">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-7">
+					<div class="col-md-5">
 		              	<div id="logo" class="logo">
 							<a href rel="home" title="home">
 								<img src="../images/logo.svg" alt="">
@@ -68,21 +77,38 @@
 						</div>
 						
 					</div>
-
-		            <div class="col-md-5">
+					<div class="col-md-4">
+						<div class="search-wrap">
+							<div class="search-icon"></div><!-- //mobile search button -->
+							<form action="#" id="searchform" class="search-form" method="get" role="search">
+								<input type="text" id="s" placeholder="Tìm kiếm" class="search-field">
+							</form>
+						</div><!-- /.search-wrap -->
+					</div>
+		            <div class="col-md-3-2">
+							
+						</div>
 						<div class="btn-menu">
 						</div><!-- //mobile menu button -->
 			            	<div class="member-area">
 								<div class="follow-us">
 										<% if(infoUser){%>
-											<div><span class="has-children" style="color: aliceblue;">Hello <%= infoUser.fullname %></span></div>
+											<div><span class="has-children" style="color: aliceblue;">Hello <%= infoUser.fullname %></span>  </div>
 											<ul class="social-links">
 												<nav id="mainnav" class="mainnav">
 															<li class="content">
-																<span class="login-popup"><a href="/users/edit-user/<%= infoUser._id %> ">Tài Khoản Của Tôi</a></span>
+																<span class=""><a href="/users/info-user2/<%= infoUser._id %> ">Thông Tin Cá Nhân</a></span>
 															</li>
 															<li class="content">
-																<span class="login-popup"><a href="/users/dang-xuat">Đăng Xuất</a></span>
+																<span class=""><a href="/users/edit-user/<%= infoUser._id %> ">Chỉnh Sửa Thông Tin</a></span>
+															</li>
+															<% if(infoUser && infoUser.role == 1){ %>
+																<li class="content">
+																	<span class=""><a href="/dashboard2">Quản Lý Trang</a></span>
+																</li>
+															<% } %> 
+															<li class="content">
+																<span class=""><a href="/users/dang-xuat">Đăng Xuất&nbsp;&nbsp;<i class="fas fa-sign-out-alt"></i></a></span>
 															</li>
 												</nav>
 											</ul>
@@ -99,39 +125,26 @@
 	   	</div><!-- /.top-wrap -->
 		<div class="header-wrap">
 		 <div class="container">
-		    <div class="row">
-				<div class="col-md-9">
+			<div class="row">
+				<div class="col-md-3">
 					<nav id="mainnav" class="mainnav">
 						<ul class="menu">
-							<li><a href="/">Trang Chủ</a></li>	
+							<li><a href="/"><i class="fas fa-home"></i></a></li>	
 							</li>
-							<li class="has-children"><a href="#">Tất Cả</a>
-								<% if(listTopic && listTopic.length){ %>
-									<ul class="sub-menu">
-									<%listTopic.forEach(item => { %>
-
-										<li><a href="/topics/info-topic?topicID=<%=item._id%>"><%=item.name%></a>
-										</li>
-									<% })%>
-									</ul><!-- /.submenu -->
-                            	<% }%>
-							</li>
-							<li class="gn-mega-menu"><a href="category.html">Mới Nhất</a>
+							<li class="gn-mega-menu"><a href="">HOT</a>
 								<div class="sub-menu">
 									<div class="container">
 									<div class="row">
 									<div class="col-md-12">
 										<div class="mega-item-wrap">
 											<% if(listPost && listPost.length){ %>
-												<% for( let index = 0; index < 6; index++ ) { %>
+												<% listPost.slice(0,6).forEach((item, index) => { %>
+												 
 												<div class="mega-item">
-													<img src="../images/thumbs/11.jpg" alt="image">	
-													<div class="content">
-														<div class="date"><%=moment(listPost[index].createAt).startOf('hour').fromNow();%></div>
-													</div>
-													<h5><a href="/posts/info-post?postID=<%=listPost[index]._id%>"><%=listPost[index].name%></a></h5>
+													<a href="/posts/info-post?postID=<%= item._id%>"><img style="max-width : 80px ; max-height: 80px; " src="/images/news/<%=item.avatar %>" width="80px" height="80px	" alt="avatar"></a>
+													<h5><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h5>
 												</div>
-											<% }%>
+												<% }) %>
                             			<% }%>
 										</div>
 									</div>
@@ -139,26 +152,44 @@
 									</div>
 								</div><!-- /.submenu -->
 							</li>
-							<% if(infoUser && infoUser.role == 1){ %>
-
-								<li><a href="/dashboard">Dashboard</a></li>	
-							</li>
-							<% }%>
-
 						</ul><!-- /.menu -->
 					</nav><!-- /nav -->
 				</div><!-- /.col-md-9 -->
-				<div class="col-md-3">
-					<div class="search-wrap">
-						<div class="search-icon"></div><!-- //mobile search button -->
-						<form action="#" id="searchform" class="search-form" method="get" role="search">
-							<input type="text" id="s" placeholder="Search" class="search-field">
-							<input type="submit" value="&#xf002;" id="searchsubmit" class="search-submit">
-							<a class="search-close" href="#"><i class="fa fa-times-circle"></i></a>
-						</form>
-					</div><!-- /.search-wrap -->
-				</div><!-- /.col-md-3 -->
-		    </div><!-- /.row -->
+				<div class="col-md-7">
+					<nav id="mainnav" class="mainnav">
+						<ul class="menu">
+							<li><a href=""><%=moment().format('LLLL');%></a></li>
+							<% if(listTopic && listTopic.length){ %>
+								<%listTopic.slice(0, 4).forEach(item => { %>
+									<li>
+										<a href="/topics/info-topic?topicID=<%=item._id%>"><%=item.name%></a>
+									</li>	
+								<% })%>
+							<% }%>
+						</ul><!-- /.menu -->
+						
+					</nav><!-- /nav -->
+				</div>
+				<div class="col-md-2">
+					<nav id="mainnav" class="mainnav">
+						<ul class="menu">
+							<li class="has-children"><a href="#">Tất Cả</a>
+								<% if(listTopic && listTopic.length){ %>
+									<ul class="sub-menu">
+									<%listTopic.forEach(item => { %>
+	
+										<li><a href="/topics/info-topic?topicID=<%=item._id%>"><%=item.name%></a>
+										</li>
+									<% })%>
+									</ul><!-- /.submenu -->
+								<% }%>
+							</li>
+
+						</ul><!-- /.menu -->
+						
+					</nav><!-- /nav -->
+				</div><!-- /.col-md-9 -->
+				</div>
 		 </div><!-- /.container -->
 		
 		

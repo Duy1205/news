@@ -47,7 +47,7 @@
 
 	a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, caption, canvas, center, cite, code,
 	dd, del, details, dfn, dialog, div, dl, dt, em, embed, fieldset, figcaption, figure, form, footer, header, hgroup, h1, h2, h3, h4, h5, h6, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav,object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, tt, table, tbody, textarea, tfoot, thead, time, tr, th, td, u, ul, var, video  { 
-	   font-family: inherit; 
+	   font-family: open sans, sans-serif; 
 	   font-size: 100%; 
 	   font-weight: inherit; 
 	   font-style: inherit; 
@@ -365,6 +365,36 @@
 		float: left;
 	}
 
+	.section{
+		width: 100%;
+    	float: left;
+	}
+
+	.wrap-main-nav{
+		background: #fff;
+		position: sticky;
+		top: 0;
+		z-index: 999;
+	}
+
+	.main-nav {
+		width: 100%;
+		float: left;
+		clear: both;
+		font-size: 14px;
+		border-bottom: 1px solid #E5E5E5;
+		transition-duration: 300ms;
+		transition-property: all;
+		transition-timing-function: cubic-bezier(.7,1,.7,1);
+	}
+
+	.main-nav .parent {
+		justify-content: space-between;
+		max-width: 1370px;
+		margin: 0 auto;
+		padding: 0 15px;
+	}
+	
 	.top-wrap .logo {
 		margin-top: 5px;
 		height: auto;
@@ -680,7 +710,7 @@
 	#mainnav > ul > li > a {
 	   position: relative;
 	   display: block;
-	   font-size: 24px;
+	   font-size: px;
 	   color: #181818;
 	   text-decoration: none;
 	   height: 88px;
@@ -2238,9 +2268,8 @@
 	}
 
 	.featured-posts .content-right h3 a {
-		font-size: 18px;
 		line-height: 27px;
-		font-weight: normal;
+		font-weight: bold;
 	}
 
 	.featured-posts .content-right .cat {
@@ -3056,7 +3085,7 @@
 	}
 
 	.posts .head-post p {
-		font-size: 24px;
+		font-size: 15px;
 		line-height: 36px;
 		font-weight: 300;
 		margin-bottom: 26px;
@@ -3381,7 +3410,7 @@
 		position: relative;
 		color: #343434;
 		border: 1px solid #ececec;
-		padding: 25px 25px 35px;
+		padding: 15px 15px 15px;
 		margin-bottom: 20px;
 	}
 
