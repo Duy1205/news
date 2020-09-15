@@ -29,6 +29,15 @@ route.get('/postT7', async ( req, res) => {
 
 })
 
+route.get('/recentpost', async ( req, res) => {
+    let infoPost = await POST_MODEL.getList({ })
+
+
+    renderToView(req, res, 'pages/recentpost', { infoPost: infoPost.data})
+
+})
+
+
 route.get('/edit-post/:postID', async (req, res) => {
 
     let {postID} = req.params;
@@ -42,12 +51,14 @@ route.get('/edit-post/:postID', async (req, res) => {
 });
 
 route.post('/add-post',uploadMulter.single('avatar') ,async (req , res) => {
+
+    // Bên trong hàm .single() truyền vào name của thẻ input, ở đây là "file"
+    
     let {name, content, topic, author } = req.body;
-    //console.log({name, content, topic, comment});
+
     let infoFile = req.file;
     
     let infoPost = await POST_MODEL.insert({ name, content, topic, author, avatar: infoFile.originalname });
-    //console.log(infoPost);
     
     res.json({infoPost});
 })
@@ -85,10 +96,10 @@ route.post('/update-post/:postID', async (req, res) => {
     
 })
 
-route.post('/remove-post/:postID', async (req, res) => {
-    let {postID} = req.params;
+route.post('/remove-post', async (req, res) => {
+    let {postID, topicID} = req.query;
 
-    let infoPost = await POST_MODEL.remove({postID});
+    let infoPost = await POST_MODEL.remove({postID, topicID});
 
     res.json({infoPost});
 })

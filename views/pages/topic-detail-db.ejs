@@ -38,7 +38,7 @@
                                     <td ><%- item.content.substring(0,25)%></td>
                                     <td><%= infoTopic.name %></td>
                                     <td>
-                                        <button class="btn btn-danger" _postID="<%= item._id%>" id="btnRemovePost" type='submit'>
+                                        <button class="btn btn-danger" _postID="<%= item._id%>"  _topicID ="<%=infoTopic._id%>" id="btnRemovePost" type='submit'>
                                         <i class="fa fa-times"></i> 
                                             Xóa
                                         </button>
@@ -69,11 +69,13 @@
         e.preventDefault();
 
         let postID = $(this).attr('_postID');
+        let topicID = $(this).attr('_topicID');
+
         console.log({postID})
         if (window.confirm('Bạn có chắc chắn xóa không?')) {
             
             $.ajax({
-                url: `/posts/remove-post/${postID}`,
+                url: `/posts/remove-post?postID=${postID}&topicID=${topicID}`,
                 method: 'POST',
                 success: resp=>{
                     if(! resp.error){

@@ -74,7 +74,9 @@ module.exports = class Topic extends TOPIC_COLL {
 
                 let infoAfterRemove = await TOPIC_COLL.findByIdAndDelete(topicID);
 
-                if (!infoAfterRemove)
+                let infoPostRemove  = await POST_COLL.deleteMany({topic : topicID});
+
+                if (!infoAfterRemove || !infoPostRemove)
                     return resolve({ error: true, message: 'cannot_remove_data' });
 
                 return resolve({ error: false, data: infoAfterRemove, message: "remove_data_success" });

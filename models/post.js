@@ -140,6 +140,20 @@ module.exports = class Post extends POST_COLL {
         })
     }
 
+    static listCmtPost(){
+        return new Promise(async resolve => {
+            try {
+                let listCmtPost = await POST_COLL.find({})
+                .sort({comments : -1})
+
+                if(!listCmtPost) return resolve({error : true, message : 'cannot)get_data'})
+                return resolve({error : false, data : listCmtPost})
+            } catch (error) {
+                return resolve({error : true, message : error.message});
+            }
+        })
+    }
+
     static getInfo({ postID }) {
         return new Promise(async resolve => {
             try {
@@ -187,7 +201,7 @@ module.exports = class Post extends POST_COLL {
         })
     }
 
-    static remove({ postID }) {
+    static remove({ postID, topicID }) {
         return new Promise(async resolve => {
             try {
 
@@ -196,8 +210,18 @@ module.exports = class Post extends POST_COLL {
 
                 let infoAfterRemove = await POST_COLL.findByIdAndDelete(postID);
 
-                if (!infoAfterRemove)
+                let infoCmtRemove   = await COMMENT_COLL.deleteMany({ post : postID});
+
+                if (!infoAfterRemove || !infoCmtRemove)
                     return resolve({ error: true, message: 'cannot_remove_data' });
+
+                let removePostToTopic  = await TOPIC_COLL.findByIdAndUpdate(topicID, {
+                    $pull : {
+                        posts : postID
+                    }
+                }, {new : true})
+
+                if(!removePostToTopic) return resolve({error : true, message :'cannot_remove_post_to_topic'})
 
                 return resolve({ error: false, data: infoAfterRemove, message: "remove_data_success" });
             } catch (error) {

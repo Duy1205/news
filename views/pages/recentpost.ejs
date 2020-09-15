@@ -5,13 +5,13 @@
         <div class="col-md-12">
     <div class="relate-posts">
         <div class="section-title">
-            <h4><a href="#">Những Bài Viết Trong (Tháng 7)</a></h4>
+            <h4><a href="#">Những Bài Viết Gần Đây</a></h4>
         </div>
         <div class="post-wrap">
             <article class="item-news full-thumb">
                 <div class="post thumb-art">
                     <% if(listPost && listPost.length){ %>
-                        <% listPost.slice(0,9).forEach(item => { %>
+                        <% listPost.slice(3,12).forEach(item => { %>
                         
                                 <h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
                                 <span>

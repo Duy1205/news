@@ -12,17 +12,18 @@
 									<% listPost.slice(0,1).forEach(item => { %>
 									 
 										<div class="thumb">
-											<a href="/posts/info-post?postID=<%= item._id%>"><img src="/images/news/<%=item.avatar %>" width="1500px" height="1500px" alt="avatar"></a>
+											<a href="/posts/info-post?postID=<%= item._id%>"><img src="/images/news/<%=item.avatar %>" width="1200px" height="1500px" alt="avatar"></a>
 										</div>
 										<div class="cat">
 											<a href="/topics/info-topic?topicID=<%=item.topic._id%>"><%=item.topic.name%></a>
 											
 										</div>
 										<h3><a href="/posts/info-post?postID=<%=item._id%>"><%=item.name%></a></h3>
-										<p class=""><%-item.content.substring(0,142)%>...<span><a href="/posts/info-post?postID=<%= item._id%>">Xem thêm</a></span></p>
+										<p class=""><%-item.content.substring(0,100)%><span><a href="/posts/info-post?postID=<%= item._id%>">...Xem thêm</a></span></p>
 										<br>	
 										<i class="far fa-eye"></i> <%= item.seen.length %> &nbsp; &nbsp;&nbsp;
-											<i class="fas fa-comment-dots"></i>  <%= item.comments.length %>
+											<i class="fas fa-comment-dots"></i>  <%= item.comments.length %>&nbsp; &nbsp;&nbsp;
+											<i class="far fa-thumbs-up"></i>&nbsp;<%= item.like.length %> 
 									<% }) %>
                             	<% }%>
 							</article><!--  /.post -->
@@ -33,7 +34,7 @@
 									<% listPost.slice(1,2).forEach(item => { %>
 									 
 										<div class="thumb">
-											<a href="/posts/info-post?postID=<%= item._id%>"><img src="/images/news/<%=item.avatar %>" width="230px" height="230px" alt="avatar"></a>
+											<a href="/posts/info-post?postID=<%= item._id%>"><img style="max-width : 230px ; max-height: 230px; " src="/images/news/<%=item.avatar %>" width="230px" height="230px" alt="avatar"></a>
 										</div>
 										<div class="cat">
 											<a href="/topics/info-topic?topicID=<%=item.topic._id%>"><%=item.topic.name%></a>
@@ -42,7 +43,8 @@
 										<p class=""><%-item.content.substring(0, 145)%>...<span><a href="/posts/info-post?postID=<%= item._id%>">Xem thêm</a></span></p>
 										<br>	
 										<i class="far fa-eye"></i> <%= item.seen.length %> &nbsp; &nbsp;&nbsp;
-											<i class="fas fa-comment-dots"></i>  <%= item.comments.length %>
+											<i class="fas fa-comment-dots"></i>  <%= item.comments.length %>&nbsp; &nbsp;&nbsp;
+											<i class="far fa-thumbs-up"></i>&nbsp;<%= item.like.length %> 
 									<% }) %>
                             	<% }%>
 							</article><!--  /.post -->
@@ -55,7 +57,7 @@
 									<% listPost.slice(2,3).forEach(item => { %>
 									 
 										<div class="thumb">
-											<a href="/posts/info-post?postID=<%= item._id%>"><img src="/images/news/<%=item.avatar %>" width="230px" height="230px" alt="avatar"></a>
+											<a href="/posts/info-post?postID=<%= item._id%>"><img style="max-width : 350px ; max-height: 350px; " src="/images/news/<%=item.avatar %>" width="230px" height="230px" alt="avatar"></a>
 										</div>
 										<div class="cat">
 											<a href="/topics/info-topic?topicID=<%=item.topic._id%>"><%=item.topic.name%></a>
@@ -64,7 +66,8 @@
 										<p class=""><%-item.content.substring(0,150)%>...<span><a href="/posts/info-post?postID=<%= item._id%>">Xem thêm</a></span></p>
 										<br>	
 										<i class="far fa-eye"></i> <%= item.seen.length %> &nbsp; &nbsp;&nbsp;
-											<i class="fas fa-comment-dots"></i>  <%= item.comments.length %>
+											<i class="fas fa-comment-dots"></i>  <%= item.comments.length %>&nbsp; &nbsp;&nbsp;
+											<i class="far fa-thumbs-up"></i>&nbsp;<%= item.like.length %> 
 									<% }) %>
                             	<% }%>
 							</article><!--  /.post -->
@@ -91,7 +94,9 @@
 										<p class=""><%-item.content.substring(0,30)%>...<span><a href="/posts/info-post?postID=<%= item._id%>">Xem thêm</a></span></p>
 										<br>	
 										<i class="far fa-eye"></i> <%= item.seen.length %> &nbsp; &nbsp;&nbsp;
-											<i class="fas fa-comment-dots"></i>  <%= item.comments.length %>
+											<i class="fas fa-comment-dots"></i>  <%= item.comments.length %>&nbsp; &nbsp;&nbsp;
+										<i class="far fa-thumbs-up"></i>&nbsp;<%= item.like.length %> 
+
 									<% }) %>
                             	<% }%>
 							</article><!--  /.post -->
@@ -116,10 +121,10 @@
 				<div class="col-md-4">
 					<div class="sidebar-widget-1">
 						<div class="widget widget-recent gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
-							<h5 class="widget-title">Những Bài Viết Gần Đây</h5>
+							<a href="/posts/recentpost"><h5 class="widget-title">Những Bài Viết Gần Đây</h5></a>
 							<ul>
                             <% if(listPost && listPost.length){ %>
-                            <% listPost.slice(8,14).forEach(item => { %>
+                            <% listPost.slice(3,10).forEach(item => { %>
 							 
                                 <li>
 									<div class="thumb">
@@ -248,8 +253,8 @@
 								<h5 class="widget-title">Lưu Trữ</h5>
 								<ul class="cat-list">
 									<%if (listPost && listPost.length) {%>
-										<a href="/posts/postT7">Tháng 7 2020<span>(<%= listPost.slice(0,10).length %>)</span></a> <hr>
-										<a href="/posts/postT6">Tháng 6 2020<span>(<%= listPost.slice(10,20).length %>)</span></a>
+										<a href="/posts/postT7">Tháng 7 2020<span>(<%= listPost.slice(0,9).length %>)</span></a> <hr>
+										<a href="/posts/postT6">Tháng 6 2020<span>(<%= listPost.slice(9,20).length %>)</span></a>
 									<%}%>
 								</ul>
 							</div><!-- /.widget-categories -->
@@ -263,8 +268,8 @@
 				        <div class="flex-container">
 				            <div class="flexslider loading">
 				                <ul class="slides">
-									<% if(listPost && listPost.length){ %>
-										<% listPost.slice(14,18).forEach(item => { %>
+									<% if(listCmtPost && listCmtPost.length){ %>
+										<% listCmtPost.slice(0,5).forEach(item => { %>
 										<li>
 											<div class="item-wrap">
 												<a href="/posts/info-post?postID=<%= item._id%>"><img style="max-width : 700px ; max-height: 700px; " src="/images/news/<%=item.avatar %>" width="750px" height="450px" alt="avatar"></a>
@@ -282,7 +287,6 @@
 					<div class="trending-posts">
 						<div class="gn-line"></div>
 						<div class="section-title">
-							<h4><a href="#">Xu Hướng</a></h4>
 						</div>
 						<div class="one-fourth gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
 							<article class="post first">

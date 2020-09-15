@@ -89,8 +89,12 @@ module.exports = class Comment extends COMMENT_COLL {
                     return resolve({ error: true, message: 'cannot_remove_data' });
 
                 let removeCommentToPost = await POST_COLL.findByIdAndUpdate(postID, {
-                    $pull: { comments: commentID }
+                    $pull: { 
+                            comments: commentID 
+                        }
                 }, {new: true})
+
+                if(!removeCommentToPost) return resolve({error : true, message : 'cannot_remove_comment_to_post'});
 
                 return resolve({ error: false, data: infoAfterRemove, message: "remove_data_success" });
             } catch (error) {

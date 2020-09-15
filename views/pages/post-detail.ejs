@@ -26,14 +26,14 @@
                                 <h2><%=infoPost.name%></h2>
                                 <p><%-infoPost.content%></p>
                                 <div class="meta">
-                                    <span class="author">Viết bơi : Tác Giả <%= infoPost.author %>  <a href=""></a></span>
+                                    <span class="author">Viết bơi : Tác Giả  <a href=""></a></span>
                                 </div>
                                  <div class="helpful like-post-action">
                                  <% if(infoUser) {%>
                                     <% if (infoPost.like.includes(infoUser._id)) {%>
-                                        <a class="like like-post" id="un-like-post" _postID ="<%=infoPost._id%>" href="#">Bỏ thích bài viết này </a>
+                                        <a class="like like-post" id="un-like-post" _postID ="<%=infoPost._id%>" href="#">Bỏ thích </a>
                                         <%}else{%>
-                                        <a class="like like-post" id="like-post" _postID ="<%=infoPost._id%>" href="#">Thích bài viết này </a>
+                                        <a class="like like-post" id="like-post" _postID ="<%=infoPost._id%>" href="#">Thích </a>
                                         <%}%>
                                         <p >Lượt like: <span id="totalLike"><%= infoPost.like.length %></span> </p>
                                 <%}%>
@@ -86,6 +86,15 @@
                                                                 <% if (item.author._id.toString() == infoUser._id.toString()) { %>
                                                                     <a id="btnDeleteComment" _postID="<%=item.post._id%>" _commentID="<%=item._id%>" href="">Xóa</a>
                                                                 <% } %>
+                                                                <div class="helpful like-post-action">
+                                                                    <% if(infoUser) {%>
+                                                                       <% if (infoPost.like.includes(infoUser._id)) {%>
+                                                                           <a class="like like-post" id="un-like-post" _postID ="<%=infoPost._id%>" href="#">Bỏ thích </a><span id="totalLike"><%= infoPost.like.length %></span>
+                                                                           <%}else{%>
+                                                                           <a class="like like-post" id="like-post" _postID ="<%=infoPost._id%>" href="#">Thích </a><span id="totalLike"><%= infoPost.like.length %></span>
+                                                                           <%}%>
+                                                                   <%}%>
+                                                                   </div>
                                                                 <br>
                                                             </div>   
                                                         </article><!-- /.comment -->
@@ -107,7 +116,7 @@
                                             </form><!-- /.comment-form -->
                                         </div><!-- /#respond -->
                                         <% } else { %>
-                                            <p>Bạn Phải Đăng Nhập Để Bình Luận</p> <br>
+                                            <p>Bạn Phải <a href="/users/dang-nhap">Đăng Nhập</a> Để Bình Luận</p> <br>
                                         <% } %>
                                     </div><!-- /.comment-post -->
                                     <div class="relate-posts">
@@ -130,37 +139,6 @@
                                             </article>
                                         </div>
                                     </div><!-- /.relate-posts -->
-                                    <div class="recommend-posts">
-                                        <div class="section-title">
-                                            <h4><a href="#">Đề Xuất Cho Bạn</a></h4>
-                                        </div>
-                                        <div class="post-wrap">
-                                            <article class="post">
-                                                <div class="thumb">
-                                                    <a href="#"><img src="/images/thumbs/7.jpg" alt="img"></a>
-                                                </div>
-                                                <div class="cat">
-                                                    <a href="">Social media</a>
-                                                </div>
-                                                <h3><a href="#">Like all back-of-the-envelope calculations, this one has a lot of wiggle room.</a></h3>
-                                                <div class="activity">
-                                                    <span class="views">12</span><span class="comment"><a href="#">0</a></span>
-                                                </div>
-                                            </article><!-- /.post -->
-                                            <article class="post margin-b0 last">
-                                                <div class="thumb">
-                                                    <a href="#"><img src="/images/thumbs/7.jpg" alt="img"></a>
-                                                </div>
-                                                <div class="cat">
-                                                    <a href="">Social media</a>
-                                                </div>
-                                                <h3><a href="#">Like all back-of-the-envelope calculations, this one has a lot of wiggle room.</a></h3>
-                                                <div class="activity">
-                                                    <span class="views">12</span><span class="comment"><a href="#">0</a></span>
-                                                </div>
-                                            </article><!-- /.post -->
-                                        </div>
-                                    </div><!-- /.recommend-posts -->
                                 </div><!-- /.main-post -->
                             </div><!-- /.body-post -->
                         </article><!-- /.post -->
@@ -220,7 +198,7 @@
                 if(!resp.error){
                     $(this).empty();
                     $('.like-post-action').prepend(`
-                        <a class="like" id="un-like-post" _postID ="${postID}" href="#"> Bỏ thích bài viết này</a>
+                        <a class="like" id="un-like-post" _postID ="${postID}" href="#"> Bỏ thích</a>
                     `)
                     $('#totalLike').text(parseInt(totalLike) + 1);
                     return toastr['success']('Đã thích bài viết', 'Thông báo');
@@ -236,7 +214,7 @@
 		e.preventDefault();
         let postID = $(this).attr("_postID");
         let totalLike = $('#totalLike').text();
-        console.log({ postID })
+        console.log({ postID, totalLike })
         $.ajax({
             url: `/posts/un-like-post?postID=${postID}`,
             method: 'GET',
@@ -244,7 +222,7 @@
                 if(!resp.error){
                     $(this).empty();
                     $('.like-post-action').prepend(`
-                        <a class="like like-post" id="like-post" _postID ="${postID}" href="#">Thích bài viết này </a>
+                        <a class="like like-post" id="like-post" _postID ="${postID}" href="#">Thích </a>
                     `)
                     $('#totalLike').text(parseInt(totalLike) - 1);
                     return toastr['success']('Đã bỏ thích bài viết', 'Thông báo');
