@@ -4,53 +4,29 @@ const COMMENT_MODEL = require('../models/comment');
 const USER_MODEL = require('../models/user');
 const jwt       = require('../utils/jwt');
 const checkActive       = require('../utils/checkActive');
+const { CF_ROUTINGS } = require('../constant/core/base_api');
 
 let ObjectID = require('mongoose').Types.ObjectId;
 
-// route.get('/listComment', async (req, res) => {
-//     let listComment = await COMMENT_MODEL.getList();
-//     console.log({listComment});
-    
-//     res.json({listComment})
-// })
-
-route.get('/add-comment', checkActive, async (req, res) => {
+route.get(CF_ROUTINGS.ADD_COMMENT, checkActive, async (req, res) => {
     let { token } = req.session;
     let infoUser = await jwt.verify(token);
 
     let { postID, content } = req.query;
     
-
     let infoComment = await COMMENT_MODEL.insert({ postID, content, author: infoUser.data._id });
 
-    // console.log(infoComment);
     res.json({infoComment});
 }) 
 
-// route.get('/infoComment', async (req, res) => {
-    
-//     let infoComment = await COMMENT_MODEL.getInfo();
-//     console.log(infoComment);
-    
-//     res.json({infoComment});
-    
-// })
-
-route.get('/listComment', async (req, res) => {
+route.get(CF_ROUTINGS.LIST_COMMENT, async (req, res) => {
     let listComment = await COMMENT_MODEL.getList();
-    //console.log({listComment});
     
     res.json({listComment})
 })
 
-route.get('/info-comment', async (req, res) => {
-    
-    // let infoComment = await COMMENT_MODEL.getInfo();
-    // console.log(infoComment);
-    
-    // res.json({infoComment});
+route.get(CF_ROUTINGS.INFO_COMMENT, async (req, res) => {
     let { commentID } = req.query;
-    // let commentID = await POST_MODEL.getInfo({ commentID })
 
    let infoComment = await COMMENT_MODEL.getInfo({commentID})
 
@@ -59,12 +35,10 @@ route.get('/info-comment', async (req, res) => {
 
 
 
-route.post('/update-comment', async (req, res) => {
+route.post(CF_ROUTINGS.UPDATE_COMMENT, async (req, res) => {
     let {commentID} = req.params;
-    //console.log({commentID});
     
     let { content} = req.body;
-    //console.log({content});
     
     let infoComment = await COMMENT_MODEL.update({commentID, content});
     console.log(infoComment);
@@ -72,11 +46,10 @@ route.post('/update-comment', async (req, res) => {
     res.json({infoComment});
 })
 
-route.get('/remove-comment', checkActive, async (req, res) => {
+route.get(CF_ROUTINGS.REMOVE_COMMENT, checkActive, async (req, res) => {
     let {commentID, postID} = req.query;
 
     let infoCommentRemove = await COMMENT_MODEL.remove({commentID, postID});
-    // console.log(infoComment);
     
     res.json({infoCommentRemove});
 })

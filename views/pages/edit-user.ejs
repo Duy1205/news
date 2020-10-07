@@ -1,5 +1,7 @@
 <%- include ('../partials2/sidebar') %>
-<%- include ('../partials2/header') %>
+<header>
+   <%- include ('../partials2/header') %>
+</header>
          <style>
          .inputfile {
             width: 0.1px;
@@ -57,7 +59,9 @@
             </div>
          </div>
       </div>
-<%- include ('../partials2/footer') %>
+<footer>
+   <%- include ('../partials2/footer') %>
+</footer>
 
 <script>
    
@@ -96,7 +100,7 @@
             
             if(!resp.error){
             toastr.success('Bạn Phải Đăng Nhập Lại','Đăng Xuất')
-            window.location.href= "/users/dang-nhap";
+            window.location.href= "/users/login";
             // window.location.href="/dashboard"
             } else {
             toastr.error('Sửa Không Thành Công','Thất Bại')

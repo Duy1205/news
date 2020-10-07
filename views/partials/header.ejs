@@ -104,7 +104,7 @@
 															</li>
 															<% if(infoUser && infoUser.role == 1){ %>
 																<li class="content">
-																	<span class=""><a href="/dashboard2">Quản Lý Trang</a></span>
+																	<span class=""><a href="/users/dashboard2">Quản Lý Trang</a></span>
 																</li>
 															<% } %> 
 															<li class="content">
@@ -113,8 +113,8 @@
 												</nav>
 											</ul>
 											<%}else{%>
-												<span class="login-popup"><a href="/users/dang-nhap">Đăng Nhập</a></span>
-												<span class="signup-popup"><a href="/users/dang-ky">Đăng Ký</a></span>
+												<span class="login-popup"><a href="/users/login">Đăng Nhập</a></span>
+												<span class="signup-popup"><a href="/users/register">Đăng Ký</a></span>
 											<%} %>
 											
 										</div>
@@ -122,16 +122,14 @@
 					</div>
 	            </div><!-- /.row -->
 	         </div><!-- /.container -->
-	   	</div><!-- /.top-wrap -->
 		<div class="header-wrap">
 		 <div class="container">
 			<div class="row">
-				<div class="col-md-3">
+				<div class="col-md-6">
 					<nav id="mainnav" class="mainnav">
 						<ul class="menu">
-							<li><a href="/"><i class="fas fa-home"></i></a></li>	
-							</li>
-							<li class="gn-mega-menu"><a href="">MỚI</a>
+							<li><a href="/">Trang Chủ</a></li>	
+							<li class="gn-mega-menu"><a href="">Mới</a>
 								<div class="sub-menu">
 									<div class="container">
 									<div class="row">
@@ -152,13 +150,13 @@
 									</div>
 								</div><!-- /.submenu -->
 							</li>
+							<li><a href=""><%=moment().format('LLLL');%></a></li>
 						</ul><!-- /.menu -->
 					</nav><!-- /nav -->
 				</div><!-- /.col-md-9 -->
-				<div class="col-md-7">
+				<div class="col-md-4">
 					<nav id="mainnav" class="mainnav">
 						<ul class="menu">
-							<li><a href=""><%=moment().format('LLLL');%></a></li>
 							<% if(listTopic && listTopic.length){ %>
 								<%listTopic.slice(0, 4).forEach(item => { %>
 									<li>

@@ -1,0 +1,170 @@
+<%- include ('../partials2/sidebar') %>
+<header>
+   <%- include ('../partials2/header') %>
+</header>
+<div id="content-page" class="content-page">
+    <div class="container">
+       <div class="row">
+            <div class="col-md-12">
+                <div class="card  card-plain">
+                <div class="card-header">
+                    <h4 class="card-title"> Quản Lý Tài Khoản User</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                    <table class="table tablesorter ">
+                        <thead>
+                        <tr>
+                            <th>
+                            Họ và Tên
+                            </th>
+                            <th>
+                            Email
+                            </th>
+                            <th>
+                            Avatar
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <% if (listUser && listUser.length) { %>
+                                <% listUser.forEach(item => { %>
+                                <tr>
+                                <td><div class="row_data" edit_type="click" col_name="fname"><%= item.fullname%></div></td>
+                                <td ><div class="row_data" edit_type="click" col_name="fname"><%=item.email%></div></td>
+                                <td><div><img style="max-width : 75px ; max-height : 75px" src="/images/news/<%= item.avatar%>" alt="avatar"></div><input type="file" class="form-control-file" id="avatar"></td>
+                                
+                                <td>
+                                    <span class="btnEdit"><a href="/users/edit-user/<%= item._id %> ">Sửa</a></span>
+                                    <button type="submit" _userID=<%= item._id%> class="btn btn-primary btnSave">Lưu lại</button>&nbsp;
+                                    <button type="reset" class="btn iq-bg-danger btnCancle"><a href="#">Hủy</a></button>
+                                </td>
+                                </tr>
+                                <% }) %>
+                            <% } %>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  </div>
+  <footer>
+    <%- include ('../partials2/footer') %>
+ </footer>
+
+ <script>
+
+    $(document).find('.btnSave').hide();
+    $(document).find('.btnCancle').hide();
+    
+    $(document).on('click', '.row_data', function(e) 
+    {
+        e.preventDefault(); 
+
+        if($(this).attr('edit_type') == 'button')
+        {
+            return false; 
+        }
+
+        $(this).closest('div').attr('contenteditable', 'true');
+        $(this).addClass('bg-warning').css('padding','5px');
+
+        $(this).focus();
+    })	
+   
+    $(document).on('focusout', '.row_data', function(e) 
+	{
+		e.preventDefault();
+
+		if($(this).attr('edit_type') == 'button')
+		{
+			return false; 
+		}
+
+		var row_id = $(this).closest('tr').attr('row_id'); 
+		
+		var row_div = $(this)				
+		.removeClass('bg-warning') //add bg css
+		.css('padding','')
+    })
+
+    $(document).on('click', '.btnCancle', function(e) 
+	{
+        e.preventDefault();
+        var tbl_row = $(this).closest('tr');
+
+        tbl_row.find('.btnSave').hide();
+		tbl_row.find('.btnCancle').hide();
+
+        tbl_row.find('.btnEdit').show(); 
+
+    })
+    	
+    $(document).on('click', '.btnEdit', function(e) 
+	{
+        e.preventDefault();
+		var tbl_row = $(this).closest('tr');
+
+        tbl_row.find('.btnSave').show();
+		tbl_row.find('.btnCancle').show();
+
+        tbl_row.find('.btnEdit').hide(); 
+
+        let userID = $(this).attr('_userID');
+        let fullname = $('#name').val().trim();
+        let _imageDemo = $('#avatar')[0].files[0];
+
+        let formData = new FormData();
+
+        if(_imageDemo){
+            formData.append('avatar', _imageDemo);
+        }
+        formData.append('fullname', fullname);
+        console.log({ fullname, _imageDemo })
+        if(!fullname){
+            toastr.warning('Bạn cần phải nhập thêm nội dung','Nhập Thêm')
+        }
+        else{
+        $.ajax({
+            url: `/users/update-user/${userID}`,
+            method: 'POST',
+            enctype: 'multipart/form-data',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: resp => {
+                console.log({ resp })
+                
+                if(!resp.error){
+
+                    toastr.success('Sửa Thành Công','Thành Công')
+                } else {
+                    toastr.error('Sửa Không Thành Công','Thất Bại')
+                }
+            },
+            error: err => {
+                console.log(err)
+            }
+        })
+    }
+		var row_id = tbl_row.attr('_userID');
+
+		
+
+		tbl_row.find('.row_data')
+		.attr('contenteditable', 'true')
+		.attr('edit_type', 'button')
+		.addClass('bg-warning')
+		.css('padding','3px')
+
+		tbl_row.find('.row_data').each(function(index, val) 
+		{  
+			$(this).attr('original_entry', $(this).html());
+		}); 		
+
+	});
+
+ </script>

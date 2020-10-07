@@ -5,14 +5,14 @@ let app             = express();
 let moment          = require('moment');
 let expressSession  = require('express-session');
 let cookieParser    = require('cookie-parser');
-let ROLE_ADMIN       = require('./utils/checkRole');
 
-//ROUTE
 const TOPIC_ROUTE = require('./routes/topic');
 const POST_ROUTE = require('./routes/post');
 const COMMENT_ROUTE = require('./routes/comment');
 const USER_ROUTE = require('./routes/user');
-//ChildRouting
+
+require('dotenv').config();
+
 const {renderToView} = require('./utils/childRouting');
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -40,40 +40,16 @@ app.get('/', async (req, res) => {
     renderToView(req, res, 'pages/home', {});
 })
 
-app.get('/dashboard2', ROLE_ADMIN, (req, res) => {
-    renderToView(req, res, 'pages/dashboard2', {});
-});
+app.get('/demo', async (req, res) => {
+    renderToView(req, res, 'pages/demo', {});
+})
 
-app.get('/dashboard3', (req, res) => {
-    renderToView(req, res, 'pages/dashboard', {});
-});
+app.get('/demo2', async (req, res) => {
+    renderToView(req, res, 'pages/demo2', {});
+})
 
-app.get('/dashboard', (req, res) => {
-    renderToView(req, res, 'pages/logindb', {});
-});
-app.get('/add-post', (req, res) => {
-    renderToView(req, res, 'pages/add-post', {});
-});
-app.get('/add-topic', (req, res) => {
-    renderToView(req, res, 'pages/add-topic', {});
-});
-app.get('/add-user', (req, res) => {
-    renderToView(req, res, 'pages/add-user', {});
-});
-app.get('/listpost', (req, res) => {
-    renderToView(req, res, 'pages/listpost', {});
-});
-app.get('/listtopic', (req, res) => {
-    renderToView(req, res, 'pages/listtopic', {});
-});
-
-app.get('/listTable', (req, res) => {
-    renderToView(req, res, 'pages/listTable', {});
-});
-
-
-let uri     = 'mongodb://localhost:27017/webtintuc';
-const PORT  = process.env.PORT || 3000;
+let uri     = process.env.MONGODB_URI;
+const PORT  = process.env.PORT;
 
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.connection.once('open', () => {

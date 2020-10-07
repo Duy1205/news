@@ -235,7 +235,7 @@
 													<ul class="comments">
 														<li>
 															<div class="avatar">
-																<a href="#"><img src="/images/news/<%= item.avatar%>" width="70px" height="70px" alt="image"></a> <br>
+																<a href="#"><img style="max-width : 75px ; max-height : 75px" src="/images/news/<%= item.avatar%> " alt="image"></a> <br>
 															</div>
 															<p><a><%= item.fullname %></a> <br> Nhà văn </p> 
 														</li>	
@@ -248,17 +248,11 @@
 							</div><!-- /.tabs -->
 						</div>
 
-						<%if( infoUser && infoUser.role == 1) { %> 
-							<div class="widget widget-categories gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
+							<!-- <div class="widget widget-categories gn-animation" data-animation="fadeInUp" data-animation-delay="0" data-animation-offset="75%">
 								<h5 class="widget-title">Lưu Trữ</h5>
 								<ul class="cat-list">
-									<%if (listPost && listPost.length) {%>
-										<a href="/posts/postT7">Tháng 7 2020<span>(<%= listPost.slice(0,9).length %>)</span></a> <hr>
-										<a href="/posts/postT6">Tháng 6 2020<span>(<%= listPost.slice(9,20).length %>)</span></a>
-									<%}%>
 								</ul>
-							</div><!-- /.widget-categories -->
-						<% } %> 
+							</div>/.widget-categories -->
 					</div><!-- /.sidebar -->
 				</div><!-- /.col-md-4 -->
 				<div class="col-md-6">

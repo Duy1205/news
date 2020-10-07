@@ -1,5 +1,8 @@
 <%- include ('../partials2/sidebar') %>
-<%- include ('../partials2/header') %>
+<header>
+   <%- include ('../partials2/header') %>
+
+</header>
          <style>
          .inputfile {
             width: 0.1px;
@@ -158,7 +161,9 @@
                </div>
             </div>
          </div>
-<%- include ('../partials2/footer') %>
+         <footer>
+            <%- include ('../partials2/footer') %>
+         </footer>
 
 <script>
 
@@ -173,7 +178,7 @@
             method: 'POST',
             success: resp=>{
                   if(! resp.error){
-                     window.location.href = "/dashboard"
+                     window.location.href = "/users/dashboard"
                   }else{
                      toastr.warning("Ban không xóa được", "Cảnh Báo")
                   }

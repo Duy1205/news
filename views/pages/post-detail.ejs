@@ -15,7 +15,9 @@
    
     
 </style>
-<%- include('../partials/header.ejs') %>
+<header>
+    <%- include('../partials/header.ejs') %>
+</header>
     <section id="main">
         <div class="container">
             <div class="row">
@@ -86,15 +88,7 @@
                                                                 <% if (item.author._id.toString() == infoUser._id.toString()) { %>
                                                                     <a id="btnDeleteComment" _postID="<%=item.post._id%>" _commentID="<%=item._id%>" href="">Xóa</a>
                                                                 <% } %>
-                                                                <div class="helpful like-post-action">
-                                                                    <% if(infoUser) {%>
-                                                                       <% if (infoPost.like.includes(infoUser._id)) {%>
-                                                                           <a class="like like-post" id="un-like-post" _postID ="<%=infoPost._id%>" href="#">Bỏ thích </a><span id="totalLike"><%= infoPost.like.length %></span>
-                                                                           <%}else{%>
-                                                                           <a class="like like-post" id="like-post" _postID ="<%=infoPost._id%>" href="#">Thích </a><span id="totalLike"><%= infoPost.like.length %></span>
-                                                                           <%}%>
-                                                                   <%}%>
-                                                                   </div>
+                                                                
                                                                 <br>
                                                             </div>   
                                                         </article><!-- /.comment -->
@@ -116,7 +110,7 @@
                                             </form><!-- /.comment-form -->
                                         </div><!-- /#respond -->
                                         <% } else { %>
-                                            <p>Bạn Phải <a href="/users/dang-nhap">Đăng Nhập</a> Để Bình Luận</p> <br>
+                                            <p>Bạn Phải <a href="/users/login">Đăng Nhập</a> Để Bình Luận</p> <br>
                                         <% } %>
                                     </div><!-- /.comment-post -->
                                     <div class="relate-posts">
@@ -147,60 +141,29 @@
             </div><!-- /.row -->
         </div><!-- /.container -->
     </section>
-<%- include('../partials/footer.ejs') %>
+    <footer>
+        <%- include('../partials/footer.ejs') %>
+    </footer>
 
 <script>
    
-    // $(document).on('click', '#btnComment', function(e) {
-	// 	e.preventDefault();
-        
-    //     let postID = $(this).attr('_postID');
-    //     let content = $('#inputComment').val();
-    //     let author = $('#commentname').val();
-        
-    //     $.ajax({
-    //         url: `/comment/add-comment`,
-    //         method: 'POST',
-    //         data: { examID, content },
-    //         success: resp => {  
-    //             let infoComment = resp.data
-    //             //console.log({ infoComment })
-    //             if(!resp.error){
-    //                 $('.panel-body .comment').append(`
-    //                     <div class="comment-panel">
-    //                         <img src="../lttnpy_core/images/logo_new.png" alt="logo">
-    //                         <br>
-    //                         <p>${author}</p>
-    //                         <p style="font-size: 10px; color: gray">${moment(infoComment.createAt).startOf('minutes').fromNow()}</p>
-    //                         <p>${content}</p>
-    //                         <a id="btnDeleteComment" _examID="${examID}" _commentID="${infoComment._id}" href="">Xóa</a>
-    //                         <br>
-    //                     </div>
-    //                 `)
-    //                 $('#inputComment').val('')
-    //             }else{
-    //                 return toastr['error']('FAIL', 'Thông báo');
-    //             }
-    //         },
-    //         error: err => console.log({ err })
-    //     });
-    // })
-
     $(document).on('click', '.like-post', function(e) {
 		e.preventDefault();
+
         let postID = $(this).attr("_postID");
         let totalLike = $('#totalLike').text();
-        console.log({ postID, totalLike })
+        
         $.ajax({
             url: `/posts/like-post?postID=${postID}`,
             method: 'GET',
             success: resp => {
                 if(!resp.error){
-                    $(this).empty();
-                    $('.like-post-action').prepend(`
-                        <a class="like" id="un-like-post" _postID ="${postID}" href="#"> Bỏ thích</a>
-                    `)
+                    //$(this).empty();
+                    $(this).closest(".like-post-action").find("a").attr("id", `un-like-post`);
+                    $(this).closest(".like-post-action").find("a").text("Bỏ thích");
+
                     $('#totalLike').text(parseInt(totalLike) + 1);
+
                     return toastr['success']('Đã thích bài viết', 'Thông báo');
                 }else{
                     return toastr['error']('Thất bại', 'Thông báo');
@@ -212,19 +175,22 @@
 
     $(document).on('click', '#un-like-post', function(e) {
 		e.preventDefault();
+        
         let postID = $(this).attr("_postID");
         let totalLike = $('#totalLike').text();
-        console.log({ postID, totalLike })
+
         $.ajax({
             url: `/posts/un-like-post?postID=${postID}`,
             method: 'GET',
             success: resp => {
                 if(!resp.error){
-                    $(this).empty();
-                    $('.like-post-action').prepend(`
-                        <a class="like like-post" id="like-post" _postID ="${postID}" href="#">Thích </a>
-                    `)
+
+                    //$(this).empty();
+                    $(this).closest(".like-post-action").find("a").attr("id", `like-post`);
+                    $(this).closest(".like-post-action").find("a").text("Thích");
+                    
                     $('#totalLike').text(parseInt(totalLike) - 1);
+
                     return toastr['success']('Đã bỏ thích bài viết', 'Thông báo');
                 }else{
                     return toastr['error']('Thất bại', 'Thông báo');
@@ -236,12 +202,14 @@
 
     //Thêm bình luận
     $(document).on('click', '.btnAddComment', function(e) {
-		e.preventDefault();
+        e.preventDefault();
+        
         let postID = $(this).attr("_postID");
         let userID = $(this).attr("_userID");
         let content = $('#input-comment').val();
         let fullname = $('#fullname-author').attr('_fullname');
         let _avatar = $(this).attr("_avatar");
+        
         console.log({ fullname, content, userID, _avatar })
 
         if(!content){
@@ -254,14 +222,13 @@
                     success: resp => {
                         let infoComment = resp;
                         if(!resp.error){
-                            $('.comments-list').append(`
-                            <ul>
+                            $('.comments-list').find('ul').append(`
                                 <li>
                                         <article class="comment">
                                         <div class="comment-text">
                                             <img style="max-width:40px; max-height:40px" src="../images/news/${_avatar}" alt="">&nbsp;&nbsp;
                                             <span>${fullname}</span>
-                                            <p style="margin-left: 70px;" class="comment-body">${content} </p>
+                                            <p style="margin-left: 70px;" class="comment-body">${content}</p>
                                             <div class="comment-head">
                                                 <div class="date">Vừa xong</div>
                                             </div>
@@ -270,7 +237,6 @@
                                         </div>   
                                     </article><!-- /.comment -->
                                 </li>
-                            </ul>
                             `)
                             $('#input-comment').val('')
                             return toastr['success']('OK', 'Thông báo');
@@ -295,7 +261,7 @@
             success: resp => {
                 console.log({ resp })
                 if(!resp.error){
-                    $(this).closest('.comment').empty();
+                    $(this).closest('li').empty();
                     return toastr['success']('Xóa thành công', 'Thông báo');
                 }else{
                     return toastr['error']('Xóa thất bại', 'Thông báo');

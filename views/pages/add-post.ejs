@@ -1,5 +1,7 @@
 <%- include ('../partials2/sidebar') %>
-<%- include ('../partials2/header') %>
+<header>
+   <%- include ('../partials2/header') %>
+</header>
          <style>
          .inputfile {
             width: 0.1px;
@@ -90,7 +92,7 @@
                                     <textarea class="ckeditor" cols="80" id="content" name="content" rows="10"></textarea>
                                  </div>
                                  <button type="submit" class="btn btn-primary btnSave">Lưu lại</button>
-                                 <button type="reset" class="btn iq-bg-danger btnCancle"><a href="/listTable">Hủy</a></button>
+                                 <button type="reset" class="btn iq-bg-danger btnCancle"><a href="/users/listTable">Hủy</a></button>
                               </form>
                            </div>
                         </div>
@@ -100,7 +102,9 @@
             </div>
          </div>
       </div>
+<footer>
 <%- include ('../partials2/footer') %>
+</footer>
 
 <script>
    
@@ -141,7 +145,7 @@
             
             if(!resp.error){
             toastr.success('Thêm Thành Công','Thành Công')
-            window.location.href="/listTable"
+            window.location.href="/users/listTable"
             } else {
             toastr.error('Thêm Không Thành Công','Thất Bại')
             // alert("Đăng Nhập Không Thành Công")

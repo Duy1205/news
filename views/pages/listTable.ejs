@@ -1,5 +1,5 @@
 <%- include ('../partials3/sidebar') %>
-<%- include ('../partials3/header') %>
+  <%- include ('../partials3/header') %>
 <div class="content">
     <div class="row">
       <div class="col-md-12">
@@ -139,8 +139,7 @@
       </div>
     </div>
   </div>
-<%- include ('../partials3/footer') %>
-
+  <%- include ('../partials3/footer') %>
 
 <script>
 
@@ -155,7 +154,7 @@
                 method: 'POST',
                 success: resp=>{
                     if(! resp.error){
-                        window.location.href = "/listTable"
+                        window.location.href = "/users/listTable"
                     }else{
                         toastr.warning("Ban kh xoa dc", "Canh Bao")
                     }
@@ -177,7 +176,7 @@
                 method: 'POST',
                 success: resp=>{
                     if(! resp.error){
-                        window.location.href = "/listTable"
+                        window.location.href = "/users/listTable"
                     }else{
                         toastr.warning("Ban kh xoa dc", "Canh Bao")
                     }
@@ -198,7 +197,7 @@
                 method: 'POST',
                 success: resp=>{
                     if(! resp.error){
-                        window.location.href = "/listTable"
+                        window.location.href = "/users/listTable"
                     }else{
                         toastr.warning("Ban kh xoa dc", "Canh Bao")
                     }

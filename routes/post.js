@@ -5,31 +5,16 @@ const TOPIC_MODEL = require('../models/topic');
 const COMMENT_MODEL = require('../models/comment');
 const { renderToView } = require('../utils/childRouting');
 const { uploadMulter } = require('../utils/config-multer');
+const { CF_ROUTINGS } = require('../constant/core/base_api');
 
-route.get('/listPost', async (req, res) => {
+
+route.get(CF_ROUTINGS.LIST_POST, async (req, res) => {
     let listPost = await POST_MODEL.getList();
-    //console.log({listPost});
     
     res.json({listPost});
 })
 
-route.get('/postT6', async ( req, res) => {
-    let infoPost = await POST_MODEL.getList({ })
-
-
-    renderToView(req, res, 'pages/postT6', { infoPost: infoPost.data})
-
-})
-
-route.get('/postT7', async ( req, res) => {
-    let infoPost = await POST_MODEL.getList({ })
-
-
-    renderToView(req, res, 'pages/postT7', { infoPost: infoPost.data})
-
-})
-
-route.get('/recentpost', async ( req, res) => {
+route.get(CF_ROUTINGS.RECENT_POST, async ( req, res) => {
     let infoPost = await POST_MODEL.getList({ })
 
 
@@ -38,22 +23,23 @@ route.get('/recentpost', async ( req, res) => {
 })
 
 
-route.get('/edit-post/:postID', async (req, res) => {
+route.get(CF_ROUTINGS.EDIT_POST, async (req, res) => {
 
     let {postID} = req.params;
     
     let infoPost = await POST_MODEL.getInfo({ postID });
-    // console.log({infoPost});
     
     renderToView(req, res, 'pages/edit-post', {infoPost : infoPost.data});
     console.log({infoPost});
     
 });
 
-route.post('/add-post',uploadMulter.single('avatar') ,async (req , res) => {
+route.get(CF_ROUTINGS.ADD_POST, (req, res) => {
+    renderToView(req, res, 'pages/add-post', {});
+});
 
-    // Bên trong hàm .single() truyền vào name của thẻ input, ở đây là "file"
-    
+route.post(CF_ROUTINGS.ADD_POST,uploadMulter.single('avatar') ,async (req , res) => {
+
     let {name, content, topic, author } = req.body;
 
     let infoFile = req.file;
@@ -63,7 +49,7 @@ route.post('/add-post',uploadMulter.single('avatar') ,async (req , res) => {
     res.json({infoPost});
 })
 
-route.get('/info-post', async (req, res) => {
+route.get(CF_ROUTINGS.INFO_POST, async (req, res) => {
     let { postID } = req.query;
     let infoPost = await POST_MODEL.getInfo({ postID })
 
@@ -71,7 +57,7 @@ route.get('/info-post', async (req, res) => {
 
 })
 
-route.get('/info-hot', async (req, res) => {
+route.get(CF_ROUTINGS.INFO_HOT_POST, async (req, res) => {
     let { postID } = req.query;
     let infoPost = await POST_MODEL.getInfo({ postID })
 
@@ -80,23 +66,18 @@ route.get('/info-hot', async (req, res) => {
 
 })
 
-
-route.post('/update-post/:postID', async (req, res) => {
+route.post(CF_ROUTINGS.UPDATE_POST, async (req, res) => {
         let {postID} = req.params;
-        //console.log({postID});
         
         let { topic,name,content} = req.body;
         
-        
-        
         let infoPost = await POST_MODEL.update({postID, topic, name, content});
-        //console.log(infoPost);
         
         res.json({infoPost});
     
 })
 
-route.post('/remove-post', async (req, res) => {
+route.post(CF_ROUTINGS.REMOVE_POST, async (req, res) => {
     let {postID, topicID} = req.query;
 
     let infoPost = await POST_MODEL.remove({postID, topicID});
@@ -104,13 +85,10 @@ route.post('/remove-post', async (req, res) => {
     res.json({infoPost});
 })
 
-//Thích bài viết
-route.get('/like-post', async (req, res) => {
-    console.log("Da vao thich bai viet")
+route.get(CF_ROUTINGS.LIKE_POST, async (req, res) => {
     let { token } = req.session;
     let infoUser = await jwt.verify(token) ;
     console.log({infoUser});
-    
 
     let { postID } = req.query;
     console.log({postID});
@@ -123,8 +101,7 @@ route.get('/like-post', async (req, res) => {
     res.json(infoPostAfterUpdate)
 })
 
-//Bỏ thích bài viết
-route.get('/un-like-post', async (req, res) => {
+route.get(CF_ROUTINGS.UNLIKE_POST, async (req, res) => {
     let { token } = req.session;
     let infoUser = await jwt.verify(token);
     let { postID } = req.query;
