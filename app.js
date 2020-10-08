@@ -40,13 +40,13 @@ app.get('/', async (req, res) => {
     renderToView(req, res, 'pages/home', {});
 })
 
-app.get('/demo', async (req, res) => {
-    renderToView(req, res, 'pages/demo', {});
-})
+// app.get('/demo', async (req, res) => {
+//     renderToView(req, res, 'pages/demo', {});
+// })
 
-app.get('/demo2', async (req, res) => {
-    renderToView(req, res, 'pages/demo2', {});
-})
+// app.get('/demo2', async (req, res) => {
+//     renderToView(req, res, 'pages/demo2', {});
+// })
 
 let uri     = process.env.MONGODB_URI;
 const PORT  = process.env.PORT;
