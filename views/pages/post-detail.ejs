@@ -222,9 +222,9 @@
                     success: resp => {
                         let infoComment = resp;
                         if(!resp.error){
-                            $('.comments-list').find('ul').append(`
+                            $('.comments-list').find('ul').before(`
                                 <li>
-                                        <article class="comment">
+                                    <article class="comment">
                                         <div class="comment-text">
                                             <img style="max-width:40px; max-height:40px" src="../images/news/${_avatar}" alt="">&nbsp;&nbsp;
                                             <span>${fullname}</span>
@@ -235,10 +235,13 @@
                                             <a id="btnDeleteComment" _postID="${postID}" _commentID="${infoComment.infoComment.data._id}" href="">Xóa</a>
                                             <br>
                                         </div>   
-                                    </article><!-- /.comment -->
+                                    </article>
                                 </li>
                             `)
                             $('#input-comment').val('')
+
+                            //append : chèn nội dung vào cuối phần tử đã chọn
+                            //prepend : chèn nội dung vào đầu phần tử đã chọn
                             return toastr['success']('OK', 'Thông báo');
                         }else{
                             return toastr['warning']('Bạn phải đăng nhập mới được bình luận', 'Thông báo');
@@ -261,7 +264,8 @@
             success: resp => {
                 console.log({ resp })
                 if(!resp.error){
-                    $(this).closest('li').empty();
+                    // $(this).closest('li').empty(); // xóa các phần tử con
+                    $(this).closest('article').remove(); //xóa <article> + xóa luôn phần tử bên trong
                     return toastr['success']('Xóa thành công', 'Thông báo');
                 }else{
                     return toastr['error']('Xóa thất bại', 'Thông báo');

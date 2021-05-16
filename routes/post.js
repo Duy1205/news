@@ -22,6 +22,11 @@ route.get(CF_ROUTINGS.RECENT_POST, async ( req, res) => {
 
 })
 
+route.get(CF_ROUTINGS.SEARCH_POST, async (req, res) => {
+    let { key } = req.query;
+    let resultFind = await POST_MODEL.searchPosition({ key })
+    res.json({ error : false, data : { resultFind }})
+})
 
 route.get(CF_ROUTINGS.EDIT_POST, async (req, res) => {
 
@@ -30,7 +35,6 @@ route.get(CF_ROUTINGS.EDIT_POST, async (req, res) => {
     let infoPost = await POST_MODEL.getInfo({ postID });
     
     renderToView(req, res, 'pages/edit-post', {infoPost : infoPost.data});
-    console.log({infoPost});
     
 });
 

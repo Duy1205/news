@@ -36,11 +36,19 @@
                                  </div>
                                  <form>
                                     <div class="form-group avatar">
-                                      <label for="exampleFormControlFile1">Ảnh Đại Diện</label>&nbsp;&nbsp;&nbsp;
-                                      <img style="max-width : 75px ; max-height : 75px" src="/images/news/<%= infoUser.avatar%>" alt="avatar">
-                                      <input type="file" class="form-control-file" id="avatar">
-                                    </div>
-                                  </form>
+                                      <!-- <label for="exampleFormControlFile1">Ảnh Đại Diện</label>&nbsp;&nbsp;&nbsp;
+                                      <img style="max-width : 75px ; max-height : 75px" src="/images/news/" alt="avatar">
+                                      <input type="file" class="form-control-file" id="avatar"> -->
+                                      
+                                      <!-- <div class="ta-87-banner-content-img"> -->
+                                         <img class="t-img-thumbnail" style="max-width : 110px ; max-height : 100px" src="/images/news/<%= infoUser.avatar%>" alt="avatar">
+                                         &nbsp;&nbsp;
+                                       <!-- </div> -->
+                                       <!-- <i class="fa fa-camera" ><input type="file" class="hidden" id="avatar" accept="image/*"/></i> -->
+                                       
+                                          <i class="fa fa-camera upload-button"></i>
+                                           <input class="file-upload" type="file" id="avatar" accept="image/*"/>
+                                    </form>
                                  <div class="form-group">
                                     <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
                                     <div class="form-group">
@@ -100,8 +108,13 @@
             
             if(!resp.error){
             toastr.success('Bạn Phải Đăng Nhập Lại','Đăng Xuất')
-            window.location.href= "/users/login";
+            // window.location.href= "/users/login";
             // window.location.href="/dashboard"
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                  $('.t-img-thumbnail').attr('src',_imageDemo);
+            }
             } else {
             toastr.error('Sửa Không Thành Công','Thất Bại')
             // alert("Đăng Nhập Không Thành Công")
@@ -111,9 +124,55 @@
             console.log(err)
          }
       })
+      
    }
 
    });
 
+   $(document).ready(function() {
+      let _imageDemo = $('#avatar')[0].files[0];
+
+      let formData = new FormData();
+      formData.append('avatar', _imageDemo);
+      var reader = new FileReader();
+
+            reader.onload = function (e) {
+                  $('.t-img-thumbnail').attr('src',input.formData.append('avatar', _imageDemo));
+            }
+   });
 </script>
+
+<style>
+   .t-img-thumbnail {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.ta-87-banner-content-img-input {
+  margin: 0;
+  position: absolute;
+  bottom: 7px;
+  left: 94px;
+  background: #7b8294;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  text-align: center;
+  padding-top: 3px;
+  color: #fff;
+  border: 3px solid #fff;
+  cursor: pointer;
+}
+
+.ta-87-banner-content-img-input {
+      bottom: 0px;
+      left: 60px;
+      width: 24px;
+      height: 24px;
+      font-size: 11px;
+      padding-top: 2px;
+}
+</style>
         

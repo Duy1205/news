@@ -44,6 +44,7 @@ const CF_ROUTINGS = {
     UNLIKE_POST: '/un-like-post',
     INFO_HOT_POST: '/info-hot',
     RECENT_POST: '/recentpost',
+    SEARCH_POST : '/search-post',
 
     //COMMENT
 

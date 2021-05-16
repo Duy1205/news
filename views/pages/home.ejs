@@ -235,8 +235,8 @@
 													<ul class="comments">
 														<li>
 															<div class="avatar">
-																<a href="#"><img style="max-width : 75px ; max-height : 75px" src="/images/news/<%= item.avatar%> " alt="image"></a> <br>
-															</div>
+																<a href="#"><img class="t-img-thumbnail" style="max-width : 110px ; max-height : 100px" src="/images/news/<%= item.avatar%> " alt="image"></a> <br>
+															</div><br><br><br><br>
 															<p><a><%= item.fullname %></a> <br> Nhà văn </p> 
 														</li>	
 													</ul>
@@ -410,6 +410,14 @@
 				</div><!-- /.col-md-8 -->
 			</div><!-- /.row -->
 		</div><!-- /.container -->
+		<style>
+			 .t-img-thumbnail {
+				width: 30px;
+				height: 30px;
+				object-fit: cover;
+				border-radius: 50%;
+				}
+		</style>
 	</section>
 <%- include('../partials/footer.ejs') %>
 

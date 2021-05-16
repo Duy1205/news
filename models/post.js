@@ -53,6 +53,23 @@ module.exports = class Post extends POST_COLL {
         });
     }
 
+    static searchPost({ key }){
+        return new Promise(async (resolve) => {
+            try {
+             
+                let resultSearch = await POST_COLL.find({
+                    $or: [
+                        { name: new RegExp(key, 'i')  },
+                    ]
+                })
+
+                return resolve({ error: false, data: resultSearch });
+            } catch (error) {
+                return resolve({ error: true, message: error.message })
+            }
+        })
+    }
+
     static getList() {
         return new Promise(async resolve => {
             try {
